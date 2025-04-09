@@ -28,9 +28,9 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Documentation = "https://github.com/whyneedtoknow/backend#readme"
-Issues = "https://github.com/whyneedtoknow/backend/issues"
-Source = "https://github.com/whyneedtoknow/backend"
+Documentation = "https://github.com/SDSU-CompE-561-Spring-2025/smart-calendar-personal-assessment/blob/main/README"
+Issues = "https://github.com/SDSU-CompE-561-Spring-2025/smart-calendar-personal-assessment/issues"
+Source = "https://github.com/SDSU-CompE-561-Spring-2025/smart-calendar-personal-assessment"
 
 [tool.hatch.version]
 path = "src/backend/__about__.py"
