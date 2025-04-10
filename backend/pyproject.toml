@@ -7,7 +7,7 @@ name = "backend"
 dynamic = ["version"]
 description = ''
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 license = "MIT"
 keywords = []
 authors = [
@@ -25,7 +25,10 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+  "fastapi[all]",
+  "pre-commit>=4.2.0",
+]
 
 [project.urls]
 Documentation = "https://github.com/SDSU-CompE-561-Spring-2025/smart-calendar-personal-assessment/blob/main/README"
@@ -35,7 +38,18 @@ Source = "https://github.com/SDSU-CompE-561-Spring-2025/smart-calendar-personal-
 [tool.hatch.version]
 path = "src/backend/__about__.py"
 
+[tool.hatch.envs.default]
+# Default environment setting
+python = "3.12"
+installer = "uv"
+path = ".venv"
+
+[tool.hatch.envs.default.scripts]
+#Default environment script for development and database operations
+dev = "fastapi dev {args:src/backend/main.py}"
+
 [tool.hatch.envs.types]
+installer = "uv"
 extra-dependencies = [
   "mypy>=1.0.0",
 ]

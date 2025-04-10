@@ -2,6 +2,9 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return{"Homepage ig, not rlly sure how this works"}
 # User 
 @app.post("/user")
 def createUser(fName, lName, email, password):
