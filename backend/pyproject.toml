@@ -13,6 +13,7 @@ keywords = []
 authors = [
   { name = "whyneedtoknow", email = "rayskim221@gmail.com" },  
   { name = "mthuvu", email = "helloitsthu@gmail.com" },
+  { name = "kaylahicksz", email = "kaylahicksa@gmail.com },
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
