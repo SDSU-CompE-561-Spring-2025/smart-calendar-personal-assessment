@@ -5,61 +5,61 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     return{"Homepage ig, not rlly sure how this works"}
-# User 
+# User
 @app.post("/user")
-def createUser(fName, lName, email, password):
+def create_user(fname, lname, email, password):
     return {0}
 
 @app.get("/user")
-def getAllUsers():
+def get_all_users():
     return {"lalalalla"}
 
 @app.get("/user/login")
-def userLogin(email,password):
+def user_login(email,password):
     return {"idk something abt login"}
 
 @app.get("/user/logout")
-def userLogout():
+def user_logout():
     return {0}
 
 @app.delete("/user/{userId}")
-def deleteAcc():
+def delete_acc():
     return {0}
 
 #Calendar
 @app.get("/calendar/events")
-def retrieveAllEvents():
+def retrieve_all_events():
     return {0}
 
 @app.get("/calendar/events/{eventId}")
-def retrieveEvent():
+def retrieve_event():
   return {0}
 
 @app.post("/calendar/events")
-def createEvent():
+def create_event():
     return {0}
 
 @app.put("calendar/events/{eventId}")
-def updateEvent():
+def update_event():
     return {0}
 
 @app.delete("/calendar/events/{eventId}")
-def deleteEvent():
+def delete_event():
     return {0}
 
 # Habits
 @app.post("/habits")
-def createHabit():
+def create_habit():
     return {0}
 
 @app.put("/habits/{habitId}")
-def updateHabit():
+def update_habit():
     return {0}
 
 @app.get("/habits/{habitId}")
-def retrieveHabit():
+def retrieve_habit():
     return {0}
 
 @app.delete("/habits")
-def deleteHabit():
+def delete_habit():
     return {0}

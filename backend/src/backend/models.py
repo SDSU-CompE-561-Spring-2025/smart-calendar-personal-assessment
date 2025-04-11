@@ -1,31 +1,33 @@
-from sqlalchemy import Column, Integer, Boolean, String, DateTime
-from sqlalchemy.dialects.postgresql import INTERVAL
-from database import Base
 from datetime import datetime
+
+from database import Base
+from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy.dialects.postgresql import INTERVAL
+
 
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True)
-    firstName = Column(String, nullable=False)
-    lastName = Column(String, nullable=False)
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
-    accCreated = Column(DateTime, default=datetime.now)
+    acc_created = Column(DateTime, default=datetime.now)
 
 class Calendar(Base):
     __tablename__ = 'calendar'
     id = Column(Integer, primary_key=True, index=True, autoincrement = True)
     name = Column(String, nullable=False)
-    displayType = Column(String, nullable=False)
+    display_type = Column(String, nullable=False)
 
 class Event(Base):
     __tablename__ = 'event'
     id = Column(Integer, primary_key=True, index=True, autoincrement = True)
     name = Column(String, nullable=False)
-    startDate = Column(DateTime, nullable=False)
-    endDate = Column(DateTime, nullable=False)
-    startTime = Column(DateTime, nullable=False)
-    endTime = Column(DateTime, nullable=False)
+    start_date = Column(DateTime, nullable=False)
+    end_date = Column(DateTime, nullable=False)
+    start_time = Column(DateTime, nullable=False)
+    end_time = Column(DateTime, nullable=False)
     email = Column(String, unique=True, nullable=False)
     created_at = Column(DateTime, default=datetime.now)
     recurring = Column(Boolean, default=False)
@@ -43,7 +45,7 @@ class Habit(Base):
     quantity = Column(Integer, nullable=True, default=0)
     category = Column(String, nullable=False)
     description = Column(String, nullable=True)
-    completed = Column(Boolean, default=False) 
+    completed = Column(Boolean, default=False)
 
 class Category(Base):
     __tablename__ = 'category'
