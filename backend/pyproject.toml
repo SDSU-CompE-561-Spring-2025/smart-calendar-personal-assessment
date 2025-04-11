@@ -13,7 +13,8 @@ keywords = []
 authors = [
   { name = "whyneedtoknow", email = "rayskim221@gmail.com" },  
   { name = "mthuvu", email = "helloitsthu@gmail.com" },
-  { name = "kaylahicksz", email = "kaylahicksa@gmail.com },
+  { name = "kaylahicksz", email = "kaylahicksa@gmail.com"},
+  { name = "JehnFlores", email = "johnadrielflores@gmail.com"}
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -30,6 +31,7 @@ dependencies = [
   "datetime>=5.5",
   "fastapi[all]",
   "pre-commit>=4.2.0",
+  "python-dotenv>=1.1.0",
   "sqlalchemy>=2.0.40",
   "uvicorn>=0.34.0",
 ]
