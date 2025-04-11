@@ -28,6 +28,7 @@ classifiers = [
 dependencies = [
   "fastapi[all]",
   "pre-commit>=4.2.0",
+  "sqlalchemy",
 ]
 
 [project.urls]
