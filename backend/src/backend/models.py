@@ -1,8 +1,10 @@
-from datetime import datetime
-
-from database import Base
-from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy import Column, Integer, Boolean, String, DateTime, ForeignKey
 from sqlalchemy.dialects.postgresql import INTERVAL
+from sqlalchemy import relationship
+from sqlalchemy.ext.declarative import declarative_base # database
+Base = declarative_base() # database
+from database import Base
+from datetime import datetime
 
 
 class User(Base):
@@ -22,7 +24,9 @@ class Calendar(Base):
 
 class Event(Base):
     __tablename__ = 'event'
-    id = Column(Integer, primary_key=True, index=True, autoincrement = True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Link to user
+    user = relationship("User", back_populates="event")  
     name = Column(String, nullable=False)
     start_date = Column(DateTime, nullable=False)
     end_date = Column(DateTime, nullable=False)
@@ -35,7 +39,9 @@ class Event(Base):
 
 class Habit(Base):
     __tablename__ = 'habit'
-    id = Column(Integer, index=True, autoincrement = True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Link to user
+    user = relationship("User", back_populates="habits")
     month = Column(Integer, nullable=False, default=datetime.now().month)
     day = Column(Integer, nullable=False, default=datetime.now().day)
     year = Column(Integer, nullable=False, default=datetime.now().year)
@@ -50,4 +56,6 @@ class Habit(Base):
 class Category(Base):
     __tablename__ = 'category'
     id = Column(Integer, autoincrement=True, index=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Link to user
+    user = relationship("User", back_populates="category") 
     name = Column(String, nullable=False)
