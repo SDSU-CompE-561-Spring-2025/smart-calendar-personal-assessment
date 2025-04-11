@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 
+from backend.database import Base, engine
+
+Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 @app.get("/")
 def read_root():
     return{"Homepage ig, not rlly sure how this works"}
-# User 
+# User
 @app.post("/user")
 def createUser(fName, lName, email, password):
     return {0}

@@ -1,7 +1,9 @@
-from sqlalchemy import Column, Integer, Boolean, String, DateTime
-from sqlalchemy.dialects.postgresql import INTERVAL
-from database import Base
 from datetime import datetime
+
+from database import Base
+from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy.dialects.postgresql import INTERVAL
+
 
 class User(Base):
     __tablename__ = 'users'
@@ -43,7 +45,7 @@ class Habit(Base):
     quantity = Column(Integer, nullable=True, default=0)
     category = Column(String, nullable=False)
     description = Column(String, nullable=True)
-    completed = Column(Boolean, default=False) 
+    completed = Column(Boolean, default=False)
 
 class Category(Base):
     __tablename__ = 'category'
