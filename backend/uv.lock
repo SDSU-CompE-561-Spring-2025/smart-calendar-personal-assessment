@@ -26,9 +26,16 @@ wheels = [
 ]
 
 [[package]]
+name = "app"
+version = "0.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/11/f386fe5dedd254167f16cca77427eeb6ac0918e344ae881bcdec8057b3d5/app-0.0.1.zip", hash = "sha256:214549e746d777292d807eec7713c2cea332e08e037c923cd61ee1d5ab7a127f", size = 2160 }
+
+[[package]]
 name = "backend"
 source = { editable = "." }
 dependencies = [
+    { name = "app" },
     { name = "datetime" },
     { name = "fastapi", extra = ["all"] },
     { name = "pre-commit" },
@@ -39,6 +46,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "app", specifier = ">=0.0.1" },
     { name = "datetime", specifier = ">=5.5" },
     { name = "fastapi", extras = ["all"] },
     { name = "pre-commit", specifier = ">=4.2.0" },
