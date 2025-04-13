@@ -29,15 +29,6 @@ repos:
             language: system
             files: ^backend/.*\.py$
 
-          # - id: bandit
-          #   name: Bandit
-          #   entry: bandit
-          #   args: [-c, backend/pyproject.toml]
-          #   additional_dependencies: ["bandit[toml]"]
-          #   types: [python]
-          #   language: python
-          #   pass_filenames: false
-
     - repo: https://github.com/PyCQA/bandit
       rev: 1.7.4
       hooks:
