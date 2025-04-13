@@ -68,4 +68,4 @@ def delete_habit():
     return {"message": "Habit Deleted"}
 
 def example_function():
-    return "Hello from exmaple_function"
+    return "Hello test from exmaple_function"

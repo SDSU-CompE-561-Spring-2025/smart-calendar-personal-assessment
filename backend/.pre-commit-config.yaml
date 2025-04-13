@@ -27,12 +27,19 @@ repos:
             args: [--fix, --exit-non-zero-on-fix]
             types: [python]
             language: system
-            files: ^src/.*\.py$
+            files: ^backend/.*\.py$
 
-          - id: bandit
-            name: Bandit
-            entry: bandit
-            args: ["-c", "pyproject.toml", "-r", "src", "-r", "backend"]
-            types: [python]
-            language: system
-            pass_filenames: false
+          # - id: bandit
+          #   name: Bandit
+          #   entry: bandit
+          #   args: ["-c", "pyproject.toml"]
+          #   types: [python]
+          #   language: system
+          #   pass_filenames: false
+
+    - repo: https://github.com/PyCQA/bandit
+      rev: 1.7.4
+      hooks:
+      - id: bandit
+        args: [-c, backend/pyproject.toml]
+        additional_dependencies: ["bandit[toml]"]
