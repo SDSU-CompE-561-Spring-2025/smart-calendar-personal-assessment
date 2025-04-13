@@ -11,7 +11,7 @@ requires-python = ">=3.12"
 license = "MIT"
 keywords = []
 authors = [
-  { name = "whyneedtoknow", email = "rayskim221@gmail.com" },  
+  { name = "whyneedtoknow", email = "rayskim221@gmail.com" },
   { name = "mthuvu", email = "helloitsthu@gmail.com" },
   { name = "kaylahicksz", email = "kaylahicksa@gmail.com"},
   { name = "JehnFlores", email = "johnadrielflores@gmail.com"}
@@ -28,10 +28,12 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
+  "bandit>=1.8.3",
   "datetime>=5.5",
   "fastapi[all]",
   "pre-commit>=4.2.0",
   "python-dotenv>=1.1.0",
+  "ruff>=0.11.5",
   "sqlalchemy>=2.0.40",
   "uvicorn>=0.34.0",
 ]
@@ -80,3 +82,7 @@ exclude_lines = [
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
 ]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
