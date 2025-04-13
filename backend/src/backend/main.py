@@ -66,3 +66,6 @@ def retrieve_habit():
 @app.delete("/habits")
 def delete_habit():
     return {"message": "Habit Deleted"}
+
+def example_function():
+    return "Hello from exmaple_function"
