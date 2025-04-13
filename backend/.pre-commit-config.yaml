@@ -28,3 +28,11 @@ repos:
             types: [python]
             language: system
             files: ^src/.*\.py$
+
+          - id: bandit
+            name: Bandit
+            entry: bandit
+            args: ["-c", "pyproject.toml", "-r", "src", "-r", "backend"]
+            types: [python]
+            language: system
+            pass_filenames: false
