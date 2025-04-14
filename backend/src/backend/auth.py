@@ -1,8 +1,10 @@
-from backend.config import settings
-from fastapi.security import OAuth2PasswordBearer
-from pathlib.context import CryptContext
-from datetime import datetime, timedelta, UTC
+from datetime import UTC, datetime, timedelta
+
 import jwt
+from fastapi.security import OAuth2PasswordBearer
+from passlib.context import CryptContext
+
+from backend.config import settings
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = "HS256"

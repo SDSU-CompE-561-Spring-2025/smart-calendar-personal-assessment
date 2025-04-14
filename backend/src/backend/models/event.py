@@ -1,17 +1,16 @@
-from sqlalchemy import Column, Integer, Boolean, String, DateTime, ForeignKey
-from sqlalchemy.dialects.postgresql import INTERVAL
-from sqlalchemy import relationship
-from sqlalchemy.ext.declarative import declarative_base
-from backend.database import Base
 from datetime import datetime
 
-Base = declarative_base()
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, relationship
+
+from backend.database import Base
+
+# Base = declarative_base()
 
 class Event(Base):
     __tablename__ = 'event'
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Link to user
-    user = relationship("User", back_populates="event")  
+    user = relationship("User", back_populates="event")
     name = Column(String, nullable=False)
     start_date = Column(DateTime, nullable=False)
     end_date = Column(DateTime, nullable=False)

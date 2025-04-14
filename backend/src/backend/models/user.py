@@ -1,11 +1,10 @@
-from sqlalchemy import Column, Integer, Boolean, String, DateTime, ForeignKey
-from sqlalchemy.dialects.postgresql import INTERVAL
-from sqlalchemy import relationship
-from sqlalchemy.ext.declarative import declarative_base
-from backend.database import Base
 from datetime import datetime
 
-Base = declarative_base()
+from sqlalchemy import Column, DateTime, Integer, String
+
+from backend.database import Base
+
+# Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'users'

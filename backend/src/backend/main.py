@@ -1,11 +1,10 @@
-from fastapi  import FastAPI
+from fastapi import FastAPI
 
 #from sqlalchemy import Column, Integer, Boolean, String, datetime
-
-from backend.database        import Base, engine
-from backend.routes.user     import router as user_router
+from backend.database import Base, engine
 from backend.routes.calendar import router as calendar_router
-from backend.routes.habits   import router as habits_router
+from backend.routes.habits import router as habits_router
+from backend.routes.user import router as user_router
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()

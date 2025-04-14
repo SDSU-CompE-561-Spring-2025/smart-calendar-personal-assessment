@@ -1,5 +1,6 @@
 from backend.database import SessionLocal
 
+
 def get_db():
     db = SessionLocal()
     try:
@@ -7,4 +8,4 @@ def get_db():
     finally:
         db.close()
 
-        
+

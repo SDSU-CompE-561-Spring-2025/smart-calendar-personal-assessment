@@ -1,11 +1,14 @@
 from fastapi import APIRouter
 
+import backend.services.user as user_service
+
 router = APIRouter()
 
 # User
 @router.post("/")
 def create_user(fname, lname, email, password):
-    return {"message": "User Created"}
+    new_user = user_service.create_user()
+    return new_user
 
 @router.get("/")
 def get_all_users():
