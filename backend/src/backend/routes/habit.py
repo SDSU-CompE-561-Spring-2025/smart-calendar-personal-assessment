@@ -25,7 +25,7 @@ from sqlalchemy.orm import Session
 
 # Assuming your db dependency and models/schemas are defined elsewhere
 from backend.services.dependencies import get_db  # This should return a Session instance
-from backend.schemas import HabitCreate, HabitResponse
+from backend.schemas.habit import HabitCreate, HabitResponse
 from backend.services.habit import create_habit, get_habit, get_user_habits, update_habit
 
 router = APIRouter()
