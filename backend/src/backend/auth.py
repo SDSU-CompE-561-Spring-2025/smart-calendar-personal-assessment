@@ -1,4 +1,4 @@
-from src.backend.config import settings
+from backend.config import settings
 from fastapi.security import OAuth2PasswordBearer
 from pathlib.context import CryptContext
 from datetime import datetime, timedelta, UTC
