@@ -1,6 +1,6 @@
 from backend.config import settings
 from fastapi.security import OAuth2PasswordBearer
-from pathlib.context import CryptContext
+from passlib.context import CryptContext
 from datetime import datetime, timedelta, UTC
 import jwt
 
