@@ -1,32 +1,34 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel
 
 
-class HabitBase(BaseModel):
-    month: int = datetime.now(datetime.timezone.UTC).month
-    day: int = datetime.now(datetime.timezone.UTC).day
-    year: int = datetime.now(datetime.timezone.UTC).year
-    name: str | None = None]
-    duration: timedelta = timedelta(0)
-    @field_validator('duration', mode='before')
-    @classmethod
-    def parse_duration(cls, value):
-        if isinstance(value, int):
-            return timedelta(seconds=value)
-        if isinstance(value, str):
-            pass
-        return value
-    quantity: int = 0
-    category: str
-    description: str | None = None
-    completed: bool = False
-class HabitCreate(HabitBase):
-    pass
-class Habit(HabitBase):
+class UserBase(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    # verif_code: str
+    # acc_created: datetime
+class UserCreate(UserBase):
+    password: str
+
+class User(UserBase):
     id: int
+    first_name: str
+    last_name: str
+    email: str
+    verif_code: str
+    acc_created: datetime
     class Config:
-        orm_mode = True
-        json_encoders = {
-          timedelta: lambda v: int(v.total_seconds())
-        }
+        from_attributes = True
+
+class UserResponse(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    verif_code: str
+    acc_created: datetime
+    
+    class Config:
+        from_attributes = True

@@ -15,7 +15,7 @@ def create_user(db: Session, user: UserCreate):
         last_name=user.last_name,
         email=user.email,
         password=hashed_password,
-        verification_code=verification_code,
+        verif_code=verification_code,
     )
 
     db.add(db_user)
