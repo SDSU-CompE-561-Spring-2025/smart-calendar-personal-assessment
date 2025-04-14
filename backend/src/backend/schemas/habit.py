@@ -4,6 +4,10 @@ from datetime import timedelta
 from typing import Optional
 
 class HabitBase(BaseModel):
+    __tablename__ = 'habit'
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Link to user
+    user = relationship("User", back_populates="habits")
     month: int = datetime.now().month  
     day: int = datetime.now().day      
     year: int = datetime.now().year    
