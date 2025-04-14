@@ -1,8 +1,8 @@
-from src.backend.config import get_settings
-from src.backend.schemas.user import UserCreate
+from backend.config import get_settings
+from backend.schemas.user import UserCreate
 from sqlalchemy.orm import Session
-from src.backend.auth import get_password_hash
-from src.backend.models.user import User
+from backend.auth import get_password_hash
+from backend.models.user import User
 
 settings = get_settings()
 
