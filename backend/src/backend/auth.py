@@ -4,6 +4,8 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta, UTC
 import jwt
 
+from backend.config import settings
+
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
