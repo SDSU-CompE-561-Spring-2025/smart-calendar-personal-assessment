@@ -7,12 +7,28 @@ class UserBase(BaseModel):
     first_name: str
     last_name: str
     email: str
-    password: str
-    verification_code = str
+    # verif_code: str
+    # acc_created: datetime
 class UserCreate(UserBase):
     password: str
+
 class User(UserBase):
     id: int
-    acc_created = datetime
+    first_name: str
+    last_name: str
+    email: str
+    verif_code: str
+    acc_created: datetime
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+class UserResponse(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    verif_code: str
+    acc_created: datetime
+    
+    class Config:
+        from_attributes = True
