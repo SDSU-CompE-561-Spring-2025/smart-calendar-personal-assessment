@@ -7,7 +7,7 @@ class HabitBase(BaseModel):
     month: int = datetime.now().month  
     day: int = datetime.now().day      
     year: int = datetime.now().year    
-    name: Optional[str] = None
+    name: str
     duration: timedelta = timedelta(0)
     @field_validator('duration', mode='before')
     @classmethod 
