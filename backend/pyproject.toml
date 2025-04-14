@@ -87,4 +87,3 @@ exclude_lines = [
 
 [tool.bandit]
 exclude_dirs = ["tests"]
-
