@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Sign In | Calendar+</title>
+    <style>
+        * {
+            font-family: "Raleway";
+            background-color: #f0f8ff;
+            color: #1B2E3C;
+        }
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: auto;
+            width: 450px;
+            padding-bottom: 5px;
+        }
+        h1{
+            color: #01949A;
+            text-align: center;
+        }
+        form {
+            padding-top: 50px;
+        }
+        input[type=password], input[type=email] {
+            display: flex;
+            margin: 0 auto;
+            border: none;
+            border-bottom: #1B2E3C 1px solid;
+            outline: none;
+            width: 450px;
+        }
+        button {
+            background-color: #01949A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <h1>Calendar<span style="color: #DB1F48;">+</span></h1>
+    <form action="", method="POST">
+        <p>
+            <label class="flex-container" for="Email">Email</label>
+            <input type="email" name="Email" id="Email">
+        </p>
+        <p>
+            <label class="flex-container" for="Password">Password</label>
+            <input type="password" name="Password" id="Password">
+        </p>
+        <div style="text-align: center;">
+            <button type="submit">Login</button>   
+            <button type="button">New User</button>
+        </div>
+    </form>      
+</html>
