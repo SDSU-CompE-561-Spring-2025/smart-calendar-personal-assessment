@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --bgcolor: #F0FaFF;
+    --txtcolor: #0A4D68;
+    --accentcolor: #01949A;
+    --accentcolor2: #DB1F48;
+    --accentcolor3: white;
+}
+
+* {
+    font-family: 'Raleway', sans-serif;
+    background-color: var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+/* Login and Sign Up Page Styling*/
+#logo {
+    color: var(--accentcolor);
+    text-align: center;
+}
+
+#logo > span {
+    color: var(--accentcolor2);
+}
+
+button {
+    background-color: var(--accentcolor);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+form {
+    padding-top: 50px;
+}
+
+input[type=password], input[type=email] {
+    display: flex;
+    margin: 0 auto;
+    border: none;
+    border-bottom: var(--accentcolor) 1px solid;
+    outline: none;
+    width: 450px;
+}
+
+input[type=text], input[type=date]{
+    border: none;
+    border-bottom: #1B2E3C 1px solid;
+    outline: none;
+    width: 200px;
+}
+
+.rowflex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    margin: auto;
+    padding-bottom: 5px;
+    width: 450px;
+    gap: 50px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 450px;
+    padding-bottom: 5px;
+}
+
+
+
+/* main pages styling */
+#logomain {
+    color: var(--accentcolor);
+}
+
+
+
+
