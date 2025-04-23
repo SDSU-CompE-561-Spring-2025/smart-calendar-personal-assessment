@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
+from backend.config import get_settings
 from backend.models.habit import Habit
 from backend.schemas.habit import HabitCreate
-from backend.config import get_settings
 
 settings = get_settings()
 

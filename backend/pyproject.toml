@@ -30,7 +30,8 @@ classifiers = [
 dependencies = [
   "bandit>=1.8.3",
   "datetime>=5.5",
-  "fastapi[all]",
+  "fastapi-security>=0.1.0",
+  "fastapi[all,security,standard]",
   "passlib[bcrypt]>=1.7.4",
   "pre-commit>=4.2.0",
   "pyjwt>=2.10.1",

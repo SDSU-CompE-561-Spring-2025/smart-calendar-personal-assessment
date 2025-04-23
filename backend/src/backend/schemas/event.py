@@ -1,5 +1,7 @@
-from pydantic import BaseModel
 from datetime import datetime
+
+from pydantic import BaseModel
+
 
 class EventBase(BaseModel):
     name: str
@@ -14,5 +16,5 @@ class EventCreate(EventBase):
 class Event(EventBase):
     id: int
     created_at: datetime
-    class Config: 
+    class Config:
         orm_mode = True

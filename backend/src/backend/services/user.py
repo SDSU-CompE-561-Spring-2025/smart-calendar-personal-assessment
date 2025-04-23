@@ -1,8 +1,10 @@
-from backend.config import get_settings
-from backend.schemas.user import UserCreate
 from sqlalchemy.orm import Session
+
 from backend.auth import get_password_hash
+from backend.config import get_settings
 from backend.models.user import User
+from backend.schemas.user import UserCreate
+from backend.security import verify_password
 
 settings = get_settings()
 
@@ -23,8 +25,18 @@ def create_user(db: Session, user: UserCreate):
     db.refresh(db_user)
     return db_user
 
-# in user.py in routes folder, add the following code
-# import app.services.user as user_service
-# replace the return message in create_user with the following code
-#   new_user =  userservice.create_user()
-#   return new_user
+def authenticate_user(db: Session, email: str, password: str):
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        return False
+    if not verify_password(password, user.password):
+        return False
+    return user
+
+def user_login(db: Session, email: str, password: str):
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        return False
+    if not verify_password(password, user.password):
+      return False
+    return user
