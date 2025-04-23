@@ -1,6 +1,8 @@
 import time
+
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
+
 
 class LoggingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
@@ -9,5 +11,5 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         duration = time.time() - start_time
         method = request.method
         path = request.url.path
-        print(f"{method} {path} completed in {duration:.4f}s")
+        # print(f"{method} {path} completed in {duration:.4f}s")
         return response

@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
+from backend.config import get_settings
 from backend.models.category import Category
 from backend.schemas.category import CategoryCreate
-from backend.config import get_settings
 
 settings = get_settings()
 
