@@ -50,3 +50,4 @@ def user_logout():
 @router.delete("/{userId}") # needs (user, email, pass)
 def delete_acc():
     return {"message": "Account Deleted"}
+print("hi")
