@@ -31,6 +31,18 @@ body {
     padding: 0px 0px 20px 20px;
 }
 
+/* Home Page Styling*/
+#signinbtn {
+    margin: 0px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+button > a {
+    text-decoration: none;
+    color: var(--bgcolor);
+}
+
 /* Login and Sign Up Page Styling*/
 button {
     background-color: var(--accentcolor);
