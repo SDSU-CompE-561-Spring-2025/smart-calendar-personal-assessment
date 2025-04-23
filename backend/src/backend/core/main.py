@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 #from sqlalchemy import Column, Integer, Boolean, String, datetime
-from backend.database import Base, engine
+from backend.core.database import Base, engine
 from backend.middleware.cors import get_cors_config
 from backend.middleware.logging import LoggingMiddleware
 from backend.routes.calendar import router as calendar_router

@@ -57,7 +57,7 @@ path = ".venv"
 
 [tool.hatch.envs.default.scripts]
 #Default environment script for development and database operations
-dev = "fastapi dev {args:src/backend/main.py}"
+dev = "fastapi dev {args:src/backend/core/main.py}"
 
 [tool.hatch.envs.types]
 installer = "uv"

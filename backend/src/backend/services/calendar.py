@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from backend.config import get_settings
+from backend.core.config import get_settings
 from backend.models.calendar import Calendar
 from backend.schemas.calendar import CalendarCreate
 
