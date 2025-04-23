@@ -10,20 +10,40 @@
 
 * {
     font-family: 'Raleway', sans-serif;
-    background-color: var(--bgcolor);
     color: var(--txtcolor);
 }
 
-/* Login and Sign Up Page Styling*/
+body {
+    background-color: var(--bgcolor);
+    margin: 0% 0% 0% 0%;
+    padding: 0% 0% 0% 0%;
+}
+
 #logo {
     color: var(--accentcolor);
-    text-align: center;
 }
 
 #logo > span {
     color: var(--accentcolor2);
 }
 
+#headermain {
+    padding: 0px 0px 20px 20px;
+}
+
+/* Home Page Styling*/
+#signinbtn {
+    margin: 0px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+button > a {
+    text-decoration: none;
+    color: var(--bgcolor);
+}
+
+/* Login and Sign Up Page Styling*/
 button {
     background-color: var(--accentcolor);
     color: white;
@@ -38,19 +58,21 @@ form {
     padding-top: 50px;
 }
 
+input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
 input[type=password], input[type=email] {
     display: flex;
     margin: 0 auto;
-    border: none;
-    border-bottom: var(--accentcolor) 1px solid;
-    outline: none;
+    border-bottom: var(--txtcolor) 1px solid;
     width: 450px;
 }
 
 input[type=text], input[type=date]{
-    border: none;
-    border-bottom: #1B2E3C 1px solid;
-    outline: none;
+    border-bottom: var(--txtcolor) 1px solid;
     width: 200px;
 }
 
@@ -73,13 +95,81 @@ input[type=text], input[type=date]{
     padding-bottom: 5px;
 }
 
+/* Main Page Styling*/
 
+header details {
+    position: relative;
+}
 
-/* main pages styling */
-#logomain {
-    color: var(--accentcolor);
+header details ul {
+    position: absolute;
+    right: 0%;
+    list-style: none;
+    margin-left: 0; 
+    padding-left: 0;
+    width: max-content;
+    background-color: white;
+    border-radius: 5px;
+}
+header details ul li{
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+header details ul li:hover {
+    background-color: var(--accentcolor);
+    color: var(--bgcolor);
+}
+
+header details summary {
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+#userbtn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#usericon {
+    border-radius: 50%;
+}
+
+.accounticon{
+    display: block;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+}
+
+#esc {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
 }
 
 
+/* Settings Page Styling*/
+.settingsselect {
+    width: 200px;
+    height: 40px;
+    background-color: transparent;
+    border-radius: 15px;
+    border-color: var(--accentcolor);
+    cursor: pointer;
+}
 
+.settingsselect option {
+    background-color: var(--bgcolor);
+    color: var(--txtcolor);
+}
 
