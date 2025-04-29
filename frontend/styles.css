@@ -28,7 +28,8 @@ body {
 }
 
 #headermain {
-    padding: 0px 0px 20px 20px;
+    padding: 0px 0px 0px 0px;
+    margin: 10px 0px 10px 10px;
 }
 
 /* Home Page Styling*/
@@ -95,8 +96,7 @@ input[type=text], input[type=date]{
     padding-bottom: 5px;
 }
 
-/* Main Page Styling*/
-
+/* Planner Page Styling*/
 header details {
     position: relative;
 }
@@ -110,6 +110,7 @@ header details ul {
     width: max-content;
     background-color: white;
     border-radius: 5px;
+    z-index: 2;
 }
 header details ul li{
     padding: 5px 15px;
@@ -130,8 +131,22 @@ a{
     text-decoration: none;
 }
 
+#planner {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#plannerheader {
+    flex: 0 0 auto;
+    border-bottom: 1px solid var(--txtcolor);
+} 
+
 #userbtn {
-    position: fixed;
+    position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
@@ -139,24 +154,74 @@ a{
 
 #usericon {
     border-radius: 50%;
+    position: relative;
 }
 
 .accounticon{
     display: block;
-    margin: auto;
-    width: 200px;
-    height: 200px;
+    margin: 10px auto;
+    width: 100px;
+    height: 100px;
 }
 
 #esc {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
 }
 
+#mainb {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+#mainc {
+    flex: 1;
+    padding: 15px;
+    transition: margin-right 0.3s ease;
+    
+}
+
+#habitsbar {
+    width: 300px;
+    border-left: 1px solid var(--txtcolor);
+    padding: 15px;
+    box-sizing: border-box;
+    transition: width 0.3s ease;
+}
+
+#habitsbar.collapsed {
+    width: 0;
+    padding: 0;
+    border: none;
+}
+
+#mainc.collapsed {
+    margin-right: 0;
+}
+
+#habitsbtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+#habitsbtn:hover {
+    background-color: transparent;
+}
 
 /* Settings Page Styling*/
 .settingsselect {

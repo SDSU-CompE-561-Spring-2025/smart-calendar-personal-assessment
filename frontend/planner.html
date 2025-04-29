@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="planner">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +7,68 @@
 
         <title>Planner | Calendar+</title>
         <link rel="stylesheet" href="styles.css">
-        <link rel="icon" href="images/logo.png" type="image/png">
+        <link rel="icon" href="images/logo.png" type="png">
     </head>
    
-    <header>
-        <h1 id="headermain"><a id="logo" href="planner.html">Calendar<span>+</span></a></h1>
-        <nav>
-            <details id="userbtn">
-                <summary>
-                    <img src="images/defaultusericon.png" width="50" height="50" style="border-radius: 50px; border: 1px solid pink;" alt="User Icon">
-                </summary>
+    <body id="planner">
+        <header id="plannerheader">
+            <h1 id="headermain"><a id="logo" href="planner.html">Calendar<span>+</span></a></h1>
+            <nav>
+                <details id="userbtn">
+                    <summary>
+                        <img src="images/defaultusericon.png" width="30" height="30" alt="User Icon">
+                    </summary>
+                    <ul>
+                        <li><a href="account.html">Account</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                        <li>Log Out</li>
+                    </ul>
+                </details>
+            </nav>
+        </header>
+        <div id="mainb">
+            <section id="mainc">
+                <h2>Month</h2>
+                <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut impedit repellat perferendis 
+                    iusto eaque dolor tempora asperiores? Eligendi placeat nostrum aut quibusdam quas, modi \
+                    blanditiis corporis dicta. Laborum libero impedit at temporibus quaerat blanditiis soluta 
+                    ullam consequuntur culpa? Fugiat, dolore labore. Eos illum pariatur, consequatur soluta laboriosam 
+                    veniam ipsum, facere exercitationem nisi qui adipisci distinctio tempora voluptatibus quis commodi 
+                    iste necessitatibus consectetur. Non adipisci impedit eos fugit quas, libero reiciendis aspernatur 
+                    exercitationem molestias nobis harum. Suscipit exercitationem quis illo numquam, similique omnis ab
+                    quam sint nisi repellat saepe sit ullam at! Eaque omnis maiores possimus necessitatibus veritatis 
+                    nesciunt ducimus minus nam, dolor atque magnam ipsum ratione porro voluptas accusantium repellat 
+                    totam obcaecati tempore sit. Omnis accusamus similique autem quam consectetur sed quidem 
+                    aspernatur et esse accusantium praesentium consequuntur quasi vitae, fugiat rerum officiis 
+                    suscipit soluta ipsam blanditiis ducimus nihil ipsum. Facere dolorem fugit esse, et omnis, 
+                    \accusamus neque qui ullam iusto impedit consectetur nulla ut. Veritatis autem consequuntur 
+                    nesciunt obcaecati id nisi sed et adipisci saepe numquam nobis perferendis doloribus, est, 
+                    illo at quos iste. Consectetur ad maxime inventore fugiat excepturi veniam, eius fuga tempore 
+                    voluptas itaque aperiam, sunt perspiciatis obcaecati facere explicabo nemo suscipit mollitia 
+                    reiciendis consequuntur. Quo, tenetur.</div>    
+            </section>
+            <aside id="habitsbar">
+                <h2>Date</h2>
                 <ul>
-                    <li><a href="account.html">Account</a></li>
-                    <li><a href="settings.html">Settings</a></li>
-                    <li>Log Out</li>
+                    <li>Habit 1</li>
+                    <li>Habit 2</li>
+                    <li>Habit 3</li>
+                    <li>Habit 4</li>
+                    <li>Habit 5</li>
                 </ul>
-            </details>
-        </nav>
-    </header>
-
-    <body id="mainbody" style="border: 1px solid yellow;">
-
+            </aside>
+            <button id="habitsbtn"><img src="images/list.png" height="30px" width="30px" alt="list button"></button>
         
-    </body>
-   
+        </div>
+        <script>
+            const hbtn = document.getElementById('habitsbtn');
+            const hbar = document.getElementById('habitsbar');
+            const mc = document.getElementById('mainc');
 
+            hbtn.addEventListener('click', () => {
+                hbar.classList.toggle('collapsed');
+                mc.classList.toggle('collapsed');
+            });
+        </script>
+    </body>
 </html>

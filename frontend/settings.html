@@ -20,6 +20,15 @@
         p {
             text-align: center;
         }
+        
+        .select {
+            position: relative;
+        }
+
+        .select  select{
+            position: relative;
+        }
+
     </style>
 
     <header>
@@ -30,11 +39,13 @@
     <body>
         <p>
             <label for="theme">Themes</label>
-            <select class="settingsselect" id="theme" name="theme">
-                <option value="0">System</option>
-                <option value="1">Light</option>
-                <option value="2">Dark</option>
-            </select>
+            <span>
+                <select class="settingsselect" id="theme" name="theme">
+                    <option value="0">System</option>
+                    <option value="1">Light</option>
+                    <option value="2">Dark</option>
+                </select>
+            </span>
         </p>
         <p>
             <label for="calendarview">Calendar View</label>
