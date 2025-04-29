@@ -1,82 +1,68 @@
+'use client'
 import { useState } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import Link from 'next/link';
 
-const localizer = momentLocalizer(moment);
+// Define correct types for the calendar component
+type ValuePiece = Date | null;
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function CalendarPage() {
-  const [events, setEvents] = useState([
-    {
-      start: new Date(),
-      end: new Date(),
-      title: 'Sample Event',
-    }
-  ]);
-
-  const [newEvent, setNewEvent] = useState({
-    title: '',
-    start: new Date(),
-    end: new Date()
-  });
-
-  const handleAddEvent = () => {
-    if (newEvent.title) {
-      setEvents([...events, newEvent]);
-      setNewEvent({
-        title: '',
-        start: new Date(),
-        end: new Date()
-      });
-    }
-  };
-
+// Small Calendar Component
+function SmallCalendar() {
+  // Use proper typing for the state
+  const [date, setDate] = useState<Value>(new Date());
+  
+  // Use an inline arrow function for onChange
   return (
-    <div className="calendar-container">
-      <h1>Event Calendar</h1>
-      
-      <div className="event-form">
-        <h2>Add New Event</h2>
-        <div>
-          <label>Title:</label>
-          <input 
-            type="text" 
-            value={newEvent.title} 
-            onChange={(e) => setNewEvent({...newEvent, title: e.target.value})} 
-            placeholder="Enter event title"
-          />
-        </div>
-        <div>
-          <label>Start Date:</label>
-          <input 
-            type="datetime-local" 
-            value={moment(newEvent.start).format('YYYY-MM-DDTHH:mm')} 
-            onChange={(e) => setNewEvent({...newEvent, start: new Date(e.target.value)})} 
-          />
-        </div>
-        <div>
-          <label>End Date:</label>
-          <input 
-            type="datetime-local" 
-            value={moment(newEvent.end).format('YYYY-MM-DDTHH:mm')} 
-            onChange={(e) => setNewEvent({...newEvent, end: new Date(e.target.value)})} 
-          />
-        </div>
-        <button onClick={handleAddEvent}>Add Event</button>
-      </div>
+    <div className="small-calendar-wrapper">
+      <Calendar 
+        onChange={(value) => {
+          setDate(value);
+        }}
+        value={date}
+        className="homepage-calendar"
+      />
+    </div>
+  );
+}
 
-      <div className="calendar">
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500 }}
-          views={['month', 'week', 'day']}
-          defaultView='month'
-          defaultDate={new Date()}
-        />
+// Habits Placeholder Component
+function HabitsPlaceholder() {
+  return (
+    <div className="habits-placeholder">
+      <h3>Your Habits</h3>
+      <p>Track your daily progress here</p>
+      <div className="habits-coming-soon">
+        Todo list coming soon...
       </div>
+    </div>
+  );
+}
+
+// Main Homepage Component
+export default function Homepage() {
+  return (
+    <div className="homepage-container">
+      <h1 className="homepage-title">A new way to improve your life ...</h1>
+      
+      <div className="feature-boxes">
+        <div className="feature-box">
+          <h2>Calendar</h2>
+          <SmallCalendar />
+        </div>
+        
+        <div className="feature-box">
+          <h2>Habits</h2>
+          <HabitsPlaceholder />
+        </div>
+      </div>
+      
+      <h2 className="take-control">Take Control Of You</h2>
+      
+      <Link href="/signup">
+        <button className="sign-up-button">Sign Up</button>
+      </Link>
     </div>
   );
 }
