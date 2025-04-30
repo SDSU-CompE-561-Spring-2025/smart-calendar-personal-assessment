@@ -2,15 +2,17 @@
 import { useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import {
+import 'react-big-calendar/lib/sass/styles.scss';
+
+
+/* import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu" */
 
 const localizer = momentLocalizer(moment);
 
@@ -41,11 +43,22 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="calendar-container">
-      <h1>Event Calendar</h1>
+    <div className="calendar-container" style={{ padding: '20px' }}>
+      <section className="calendar">
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500}}
+          views={['month', 'week', 'day']}
+          defaultView='month'
+          defaultDate={new Date()}
+        />
+      </section>
+
       
-      <div className="event-form">
-        <h2>Add New Event</h2>
+      {/* <div className="event-form">
         <div>
           <label>Title:</label>
           <input 
@@ -72,20 +85,8 @@ export default function CalendarPage() {
           />
         </div>
         <button onClick={handleAddEvent}>Add Event</button>
-      </div>
-
-      <div className="calendar">
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500 }}
-          views={['month', 'week', 'day']}
-          defaultView='month'
-          defaultDate={new Date()}
-        />
-      </div>
+      </div> */}
     </div>
-  );
+    
+  );  
 }
