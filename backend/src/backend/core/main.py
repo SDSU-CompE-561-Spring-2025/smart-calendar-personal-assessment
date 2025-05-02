@@ -22,4 +22,4 @@ app.add_middleware(cors_config["middleware_class"], **cors_config["options"])
 
 @app.get("/")
 def read_root():
-    return{"Homepage ig, not rlly sure how this works"}
+    return{"Homepage"}
