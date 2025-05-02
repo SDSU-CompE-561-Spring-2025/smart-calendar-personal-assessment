@@ -31,3 +31,7 @@ class UserResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class DeleteUserPayload(BaseModel):
+    email: str
+    password: str
