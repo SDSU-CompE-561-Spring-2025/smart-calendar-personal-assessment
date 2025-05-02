@@ -40,3 +40,6 @@ def user_login(db: Session, email: str, password: str):
     if not verify_password(password, user.password):
       return False
     return user
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(User).filter(User.email == email).first()
