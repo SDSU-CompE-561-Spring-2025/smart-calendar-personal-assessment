@@ -47,6 +47,7 @@ def delete_user(db: Session, email: str, password: str):
       return False
     if not verify_password(password, user.password):
       return False
-    db.delete(user)
-    db.commit()
-    return True
+    return user
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(User).filter(User.email == email).first()
