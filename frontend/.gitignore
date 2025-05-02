@@ -19,6 +19,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -43,3 +44,45 @@ next-env.d.ts
 # local env files
 .venv
 .venv/
+.env*.local
+.env
+.env.development
+.env.test
+.env.production
+
+# IDE specific files
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# PWA files
+**/public/sw.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/sw.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+
+# Storybook
+/storybook-static
+
+# Project specific
+.next-sitemap.js
+
+# logs
+logs
+*.log
+
+# cache
+.eslintcache
+.stylelintcache
+.npm
+
+# Common backup files
+*.swp
+*.bak
+*.tmp
+*~
