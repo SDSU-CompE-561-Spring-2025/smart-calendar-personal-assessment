@@ -1,8 +1,8 @@
 from datetime import UTC, datetime
 
 from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy.orm import relationship
 
-# from sqlalchemy.orm import relationship
 from backend.core.database import Base
 
 
@@ -15,3 +15,6 @@ class User(Base):
     password:   str = Column(String)
     verif_code: str = Column(String, nullable=True)
     acc_created: datetime = Column(DateTime, default=datetime.now(UTC))
+
+    categories = relationship("Category", back_populates = "user")
+    # habits = relationship("Habit", back_populates = "user")

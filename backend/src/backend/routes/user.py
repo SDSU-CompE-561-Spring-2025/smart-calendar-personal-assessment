@@ -15,8 +15,7 @@ router = APIRouter()
 # User
 @router.post("", response_model = UserResponse)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    new_user = user_service.create_user(db=db, user=user)
-    return new_user
+    return user_service.create_user(db=db, user=user)
 
 @router.get("")
 def get_all_users():
@@ -42,6 +41,11 @@ async def login_for_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer", "email": user.email}
+
+# @router.get("/users/me")
+# def read_users_me():
+#     return{"message" : "User details returned succesfully"}
+
 
 @router.get("/logout")
 def user_logout():
