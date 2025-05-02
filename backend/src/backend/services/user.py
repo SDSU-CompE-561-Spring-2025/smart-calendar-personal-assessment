@@ -33,10 +33,20 @@ def authenticate_user(db: Session, email: str, password: str):
         return False
     return user
 
-def user_login(db: Session, email: str, password: str):
+# def user_login(db: Session, email: str, password: str):
+#     user = db.query(User).filter(User.email == email).first()
+#     if not user:
+#         return False
+#     if not verify_password(password, user.password):
+#       return False
+#     return user
+
+def delete_user(db: Session, email: str, password: str):
     user = db.query(User).filter(User.email == email).first()
     if not user:
-        return False
+      return False
     if not verify_password(password, user.password):
       return False
-    return user
+    db.delete(user)
+    db.commit()
+    return True

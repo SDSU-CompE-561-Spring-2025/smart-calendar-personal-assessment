@@ -18,10 +18,6 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     new_user = user_service.create_user(db=db, user=user)
     return new_user
 
-@router.get("")
-def get_all_users():
-    return {"message": "All Users Retrieved"}
-
 @router.post("/login", response_model=Token)
 async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
@@ -48,5 +44,8 @@ def user_logout():
     return {"message": "User Logged Out"}
 
 @router.delete("/{userId}") # needs (user, email, pass)
-def delete_acc():
-    return {"message": "Account Deleted"}
+def del_user(db: Session = Depends(get_db), email = str, password = str):
+    deleted = user_service.delete_user(db, email, password)
+    if(deleted):
+      return {"message": "Account Deleted"}
+    return {"message": "Invalid"}
