@@ -17,4 +17,4 @@ class User(Base):
     acc_created: datetime = Column(DateTime, default=datetime.now(UTC))
 
     categories = relationship("Category", back_populates = "user")
-    habits = relationship("Habit", back_populates = "user")
+    # habits = relationship("Habit", back_populates = "user")
