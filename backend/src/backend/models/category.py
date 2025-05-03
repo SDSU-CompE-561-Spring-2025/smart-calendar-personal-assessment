@@ -10,4 +10,4 @@ class Category(Base):
     user_id = Column(Integer, ForeignKey('users.id'))  # Link to user
 
     user = relationship("User", back_populates="categories")
-    # habits = relationship("Habit", back_populates = "category")
+    habits = relationship("Habit", back_populates = "category")

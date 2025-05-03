@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from backend.core.config import get_settings
 from backend.models.category import Category
-from backend.schemas.category import CategoryCreate, CategoryBase
+from backend.schemas.category import CategoryBase, CategoryCreate
 
 settings = get_settings()
 
