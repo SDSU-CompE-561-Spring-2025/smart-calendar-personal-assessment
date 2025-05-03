@@ -1,23 +1,23 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Interval
+from sqlalchemy.orm import relationship
 
-# from backend.database import Base
+from backend.core.database import Base
 
-Base = declarative_base()
 
 class Event(Base):
-    __tablename__ = 'event'
+    __tablename__ = 'events'
+
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Link to user
-    user = relationship("User", back_populates="event")
     name = Column(String, nullable=False)
-    start_date = Column(DateTime, nullable=False)
-    end_date = Column(DateTime, nullable=False)
-    start_time = Column(DateTime, nullable=False)
-    end_time = Column(DateTime, nullable=False)
-    email = Column(String, unique=True, nullable=False)
+    date = Column(DateTime, nullable=False)
+    duration = Column(Interval, nullable=False)
     created_at = Column(DateTime, default=datetime.now)
-    recurring = Column(Boolean, default=False)
     description = Column(String, nullable=True)
+
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Link to user
+    calendar_id = Column(Integer, ForeignKey('calendars.id'), nullable = False)
+
+    user = relationship("User", back_populates="events")
+    calendar = relationship("Calendar", back_populates="events")

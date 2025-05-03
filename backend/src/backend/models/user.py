@@ -17,3 +17,5 @@ class User(Base):
 
     categories = relationship("Category", back_populates = "user")
     habits = relationship("Habit", back_populates = "user")
+    calendar = relationship("Calendar", back_populates="user")
+    events = relationship("Event",back_populates="user" )
