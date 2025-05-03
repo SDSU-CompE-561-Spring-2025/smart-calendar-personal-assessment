@@ -9,7 +9,6 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      
       <form>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
