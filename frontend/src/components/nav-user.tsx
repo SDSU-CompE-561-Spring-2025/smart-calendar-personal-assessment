@@ -81,21 +81,26 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings  />
-                Settings
-              </DropdownMenuItem>
-              
+              <a href="/account">
+                <DropdownMenuItem>
+                  <BadgeCheck/>
+                  Account
+                </DropdownMenuItem>
+              </a>
+              <a href="/settings">
+                <DropdownMenuItem>
+                  <Settings/>
+                  Settings
+                </DropdownMenuItem>
+              </a>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
-              Log out
-            </DropdownMenuItem>
+            <a href="/signin">
+              <DropdownMenuItem>
+                <LogOut/>
+                Log out
+              </DropdownMenuItem>
+            </a>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
