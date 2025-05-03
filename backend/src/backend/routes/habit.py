@@ -9,7 +9,7 @@ from backend.schemas.habit import HabitCreate, HabitResponse
 router = APIRouter()
 
 # Habits
-@router.post("/", response_model=HabitResponse)
+@router.post("", response_model=HabitResponse)
 def create_new_habit(
     habit: HabitCreate,
     db: Session = Depends(get_db),
@@ -21,7 +21,7 @@ def create_new_habit(
 
     return habit_service.create_habit(db, habit, user_id)
 
-@router.get("/", response_model=list[HabitResponse])
+@router.get("", response_model=list[HabitResponse])
 def get_habits(
     db: Session = Depends(get_db), token: str = Depends(oauth_scheme)
 ):
