@@ -9,9 +9,11 @@ from backend.schemas.user import UserCreate
 settings = get_settings()
 
 # User CRUD operations
-def create_user(db: Session, user: UserCreate):
+def create_user(db: Session, user):
     hashed_password = get_password_hash(user.password)
     verification_code = "1234"  # Replace with actual verification code logic
+    if db.query(User).filter(User.email == user.email).first():
+        return None
     db_user = User(
         first_name=user.first_name,
         last_name=user.last_name,
@@ -33,12 +35,22 @@ def authenticate_user(db: Session, email: str, password: str):
         return False
     return user
 
-def user_login(db: Session, email: str, password: str):
+# def user_login(db: Session, email: str, password: str):
+#     user = db.query(User).filter(User.email == email).first()
+#     if not user:
+#         return False
+#     if not verify_password(password, user.password):
+#       return False
+#     return user
+
+def delete_user(db: Session, email: str, password: str):
     user = db.query(User).filter(User.email == email).first()
     if not user:
-        return False
+      return False
     if not verify_password(password, user.password):
       return False
+    db.delete(user)
+    db.commit()
     return user
 
 def get_user_by_email(db: Session, email: str):

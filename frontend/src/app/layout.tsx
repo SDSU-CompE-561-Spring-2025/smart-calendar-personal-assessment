@@ -3,7 +3,6 @@ import { Raleway } from 'next/font/google'
 import "./globals.css";
 import Link from 'next/link';
 
-
 // Import Raleway instead of Geist
 const raleway = Raleway({
   subsets: ['latin']
@@ -22,13 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={raleway.className}>
-        <header className="border-b border-(--txtcolor) py-2 px-4 flex justify-between items-center">
+        
+        <header className="border-b border-(--txtcolor) py-2 px-4 flex justify-between items-center ">
           <div className="flex items-center">
             <Link href="/" className="text-(--accentcolor) text-2xl font-bold">
               Calendar<span className="text-(--accentcolor2) text-2xl font-bold">+</span>
             </Link>
 
           </div>
+
           {/* <Link 
             href="/login" 
             className="bg-teal-500 text-white px-4 py-1 text-sm rounded"
