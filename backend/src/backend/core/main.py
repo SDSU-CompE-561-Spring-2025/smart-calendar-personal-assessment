@@ -1,12 +1,11 @@
 from fastapi import FastAPI
 
-# from sqlalchemy import Column, Integer, Boolean, String, datetime
 from backend.core.database import Base, engine
 from backend.middleware.cors import get_cors_config
 from backend.middleware.logging import LoggingMiddleware
 from backend.routes.calendar import router as calendar_router
 from backend.routes.category import router as category_router
-from backend.routes.habits import router as habits_router
+from backend.routes.habit import router as habits_router
 from backend.routes.user import router as user_router
 
 Base.metadata.create_all(bind=engine)

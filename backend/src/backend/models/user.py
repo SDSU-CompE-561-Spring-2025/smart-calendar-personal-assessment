@@ -20,4 +20,4 @@ class User(Base):
     # habits = relationship("Habit", back_populates="user")
     # categories = relationship("Category", back_populates="user")
     categories = relationship("Category", back_populates = "user")
-    # habits = relationship("Habit", back_populates = "user")
+    habits = relationship("Habit", back_populates = "user")

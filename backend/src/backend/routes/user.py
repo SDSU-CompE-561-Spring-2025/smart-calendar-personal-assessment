@@ -6,9 +6,9 @@ from sqlalchemy.orm import Session
 
 import backend.services.user as user_service
 from backend.core.auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
+from backend.core.dependencies import get_db
 from backend.schemas.token import Token
 from backend.schemas.user import UserCreate, UserResponse
-from backend.services.dependencies import get_db
 
 router = APIRouter()
 
@@ -24,11 +24,11 @@ def create_user(*, db: Session = Depends(get_db), first_name: str = "John", last
 def get_self_user(db: Session = Depends(get_db), email: str = None):
     if email is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is required")
-    
+
     user = user_service.get_user_by_email(db=db, email=email)
     if user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-    
+
     return user
 
 @router.post("/login", response_model=Token)
@@ -54,7 +54,7 @@ async def login_for_access_token(
 
 @router.get("/logout")
 def user_logout(response: Response):
-    response.delete_cookie("access_token")    
+    response.delete_cookie("access_token")
     return {"message": "User Logged Out"}
 
 @router.delete("/{userId}") # needs (user, email, pass)

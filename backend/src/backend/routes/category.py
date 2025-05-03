@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-
 import backend.services.category as category_service
 import backend.services.user as user_service
 from backend.core.auth import decode_access_token, oauth_scheme

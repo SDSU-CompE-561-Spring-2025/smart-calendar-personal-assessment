@@ -7,5 +7,6 @@ class CategoryCreate(CategoryBase):
     pass
 class CategoryResponse(CategoryBase):
     id: int
+    name: str
     class Config:
         from_attributes = True
