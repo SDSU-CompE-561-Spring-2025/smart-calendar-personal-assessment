@@ -5,7 +5,6 @@ from sqlalchemy.dialects.postgresql import INTERVAL
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
 
-
 Base = declarative_base()
 
 class Habit(Base):

@@ -1,4 +1,8 @@
-from fastapi import APIRouter
+from fastapi        import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
+from backend.services.dependencies import get_db
+from backend.schemas.calendar      import CalendarCreate
 
 router = APIRouter()
 
@@ -10,6 +14,11 @@ def retrieve_all_events():
 @router.get("/events/{eventId}")
 def retrieve_event():
   return {"message": "Event Retrieved"}
+
+@router.post("/create")
+def create_calendar(*, db: Session = Depends(get_db), name: str = "My Calendar", display_type: int = 0):
+    user_calendar = CalendarCreate(name = name, display_type = display_type)
+    return calendar_service.create_calendar(db=db, calendar=user_calendar)
 
 @router.post("/events")
 def create_event():

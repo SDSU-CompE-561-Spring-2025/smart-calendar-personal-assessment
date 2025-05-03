@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 
 from backend.core.database import Base
 
-
 class User(Base):
     __tablename__ = 'users'
     id:          int = Column(Integer, primary_key=True, index=True)
@@ -18,6 +17,6 @@ class User(Base):
 
     # events = relationship("Event", back_populates="user")
     # habits = relationship("Habit", back_populates="user")
-    # categories = relationship("Category", back_populates="user")
-    categories = relationship("Category", back_populates = "user")
+    # calendars  = relationship("Calendar", back_populates = "users")
+    # categories = relationship("Category", back_populates = "users")
     # habits = relationship("Habit", back_populates = "user")

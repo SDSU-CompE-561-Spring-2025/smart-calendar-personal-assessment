@@ -2,11 +2,18 @@ from pydantic import BaseModel
 
 
 class CalendarBase(BaseModel):
-    display_type: str
+    id : int
     name: str
+    display_type: str
+
+
 class CalendarCreate(CalendarBase):
-    pass
+    display_type: int
+
 class Calendar(CalendarBase):
     id: int
+    name: str
+    display_type: int
+    user_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
