@@ -15,8 +15,5 @@ class User(Base):
     verif_code:  str = Column(String, nullable=True)
     acc_created: datetime = Column(DateTime, default=datetime.now(UTC))
 
-    # events = relationship("Event", back_populates="user")
-    # habits = relationship("Habit", back_populates="user")
-    # calendars  = relationship("Calendar", back_populates = "users")
-    # categories = relationship("Category", back_populates = "users")
-    # habits = relationship("Habit", back_populates = "user")
+    categories = relationship("Category", back_populates = "user")
+    habits = relationship("Habit", back_populates = "user")

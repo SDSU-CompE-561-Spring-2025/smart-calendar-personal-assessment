@@ -1,5 +1,5 @@
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-
 from backend.core.config import get_settings
 from backend.models.category import Category
 from backend.schemas.category import CategoryBase, CategoryCreate
@@ -8,6 +8,9 @@ settings = get_settings()
 
 # Category CRUD operations
 def create_category(db: Session, category: CategoryCreate, user_id: int):
+    if get_category_by_name(db, category.name):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Name already exists")
+
     db_category = Category(
         user_id=user_id,
         name=category.name,
@@ -39,3 +42,6 @@ def update_category_by_id(db: Session, category_id: int, category: CategoryBase,
 def delete_category_by_id(db: Session, category_id: int, user_id: int):
     db.query(Category).filter(Category.id == category_id, Category.user_id == user_id).delete()
     db.commit()
+
+def get_category_by_name(db: Session, category_name: str):
+    return db.query(Category).filter(Category.name == category_name).first()

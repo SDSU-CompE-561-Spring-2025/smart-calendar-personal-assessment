@@ -1,37 +1,41 @@
 from collections.abc import Callable
-from datetime import datetime, timedelta
-from typing import ClassVar
+from datetime import UTC, datetime, timedelta
+from typing import Optional, ClassVar
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field
+
+from backend.schemas.category import CategoryResponse
 
 
 class HabitBase(BaseModel):
-    month: int = datetime.now(datetime.timezone.utc).month
-    day: int = datetime.now(datetime.timezone.utc).day
-    year: int = datetime.now(datetime.timezone.utc).year
+    month: int = Field(default_factory=lambda: datetime.now(UTC).month)
+    day: int = Field(default_factory=lambda: datetime.now(UTC).day)
+    year: int = Field(default_factory=lambda: datetime.now(UTC).year)
     name: str
-    duration: timedelta = timedelta(0)
-    @field_validator('duration', mode='before')
-    @classmethod
-    def parse_duration(cls, value):
-        if isinstance(value, int):
-            return timedelta(seconds=value)
-        if isinstance(value, str):
-            pass
-        return value
-    quantity: int = 0
-    category: str
+    duration: int
+    quantity: int
     description: str | None = None
     completed: bool = False
+    category_id: int
 
 class HabitCreate(HabitBase):
     pass
 
-class Habit(HabitBase):
+class HabitResponse(HabitBase):
     id: int
+    month: int
+    day: int
+    year: int
+    name: str
+    duration: int
+    quantity: int
+    description: str
+    completed: bool
+    category_id: int
+    category: Optional[CategoryResponse] = None
 
     class Config:
-        orm_mode: ClassVar[bool] = True
+        from_attributes = True
         json_encoders: ClassVar[dict[type, Callable[[timedelta], int]]] = {
             timedelta: lambda v: int(v.total_seconds())
         }
