@@ -10,4 +10,4 @@ class Calendar(Base):
     user_id      = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     user         = relationship("User", back_populates="calendar")
-    # events       = relationship("Event",    back_populates="calendar", cascade="all, delete-orphan")
+    events       = relationship("Event",    back_populates="calendar")
