@@ -4,7 +4,7 @@ from backend.core.auth import get_password_hash
 from backend.core.config import get_settings
 from backend.core.security import verify_password
 from backend.models.user import User
-from backend.schemas.user import UserCreate
+from backend.models.calendar import Calendar
 
 settings = get_settings()
 
@@ -23,6 +23,11 @@ def create_user(db: Session, user):
     )
 
     db.add(db_user)
+    db.flush()
+
+    db_calendar = Calendar(name = "My Calendar", user_id = db_user.id)
+    db.add(db_calendar)
+
     db.commit()
     db.refresh(db_user)
     return db_user

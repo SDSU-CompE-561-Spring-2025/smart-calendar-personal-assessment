@@ -1,8 +1,8 @@
 from datetime import timedelta
 
-from fastapi import APIRouter, Depends, HTTPException, status, Response
+from fastapi          import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
+from sqlalchemy.orm   import Session
 
 import backend.services.user as user_service
 from backend.core.auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
