@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Optional, Any
-
 from pydantic import BaseModel, field_validator, field_serializer
-
 
 class EventBase(BaseModel):
     name: str

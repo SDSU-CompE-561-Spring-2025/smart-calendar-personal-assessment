@@ -1,9 +1,7 @@
 from collections.abc import Callable
 from datetime import UTC, datetime, timedelta, date
 from typing import Optional, ClassVar
-
 from pydantic import BaseModel, Field, model_validator
-
 from backend.schemas.category import CategoryResponse
 
 
