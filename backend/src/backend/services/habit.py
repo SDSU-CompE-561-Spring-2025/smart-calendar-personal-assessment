@@ -1,8 +1,6 @@
-from fastapi import HTTPException, status
 from sqlalchemy.orm import Session, joinedload
 from backend.core.config import get_settings
 from backend.models.habit import Habit
-from backend.models.category import Category
 from backend.schemas.habit import HabitCreate
 
 settings = get_settings()
@@ -21,10 +19,6 @@ def create_habit(db: Session, habit: HabitCreate, user_id: int):
         category_id=habit.category_id
     )
 
-    category = db.query(Category).filter_by(id = habit.category_id).first()
-    if not category:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail = "Invalid Category Id")
-
     db.add(db_habit)
     db.commit()
     db.refresh(db_habit)
@@ -33,7 +27,7 @@ def create_habit(db: Session, habit: HabitCreate, user_id: int):
 def get_all_habits(db: Session, user_id: int):
     return db.query(Habit).filter(Habit.user_id == user_id).options(joinedload(Habit.category)).all()
 
-def get_habits_by_data(db: Session, month: int, day: int, year: int, user_id: int):
+def get_habits_by_date(db: Session, month: int, day: int, year: int, user_id: int):
     return db.query(Habit).filter(Habit.user_id == user_id, Habit.month == month, Habit.day == day, Habit.year == year).options(joinedload(Habit.category)).all()
 
 def update_habit_by_id(db: Session, habit_id: int, user_id: int, habit: HabitCreate):

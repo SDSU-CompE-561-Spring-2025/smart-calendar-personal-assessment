@@ -1,26 +1,21 @@
-from fastapi import HTTPException, status
 from sqlalchemy.orm import Session, joinedload
 from datetime import datetime, timedelta
 
 from backend.core.config import get_settings
 from backend.models.event import Event
-from backend.models.calendar import Calendar
 from backend.schemas.event import EventCreate
 from calendar import monthrange
 
 settings = get_settings()
 
-def create_event(db: Session, event: EventCreate, user_id: int):
-    calendar = db.query(Calendar).filter(Calendar.user_id == user_id).first()
-    if not calendar:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail = "Invalid Category Id")
+def create_event(db: Session, event: EventCreate, user_id: int, calendar_id: int):
     db_event = Event(
         user_id=user_id,
         name=event.name,
         date=event.date,
         duration=event.duration,
         description=event.description,
-        calendar_id=calendar.id
+        calendar_id=calendar_id
     )
 
     db.add(db_event)

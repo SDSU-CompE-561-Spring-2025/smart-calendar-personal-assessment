@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-
 from backend.core.auth import get_password_hash
 from backend.core.config import get_settings
 from backend.core.security import verify_password
