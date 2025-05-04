@@ -1,10 +1,14 @@
 from datetime import UTC, datetime, timedelta
 
 import jwt
+from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordBearer
+from jwt import InvalidTokenError
 from passlib.context import CryptContext
+from starlette.status import HTTP_401_UNAUTHORIZED
 
 from backend.core.config import settings
+from backend.schemas.token import TokenData
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = "HS256"
@@ -24,3 +28,14 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 #Add decode access token function
+def decode_access_token(token: str ) -> TokenData:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email = payload.get("sub")
+        if email is None:
+            raise HTTPException(
+                status_code=HTTP_401_UNAUTHORIZED, detail = "Invalid token"
+            )
+        return TokenData(email=email)
+    except InvalidTokenError:
+        raise HTTPException(status_code = HTTP_401_UNAUTHORIZED, detail = "Invalid token")

@@ -5,7 +5,8 @@ class CategoryBase(BaseModel):
     name: str
 class CategoryCreate(CategoryBase):
     pass
-class Category(CategoryBase):
+class CategoryResponse(CategoryBase):
     id: int
+    name: str
     class Config:
-        orm_mode = True
+        from_attributes = True
