@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/sass/styles.scss';
@@ -25,9 +25,31 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+// Map day strings to numeric values
+const dayMap: Record<string, number> = {
+  sunday: 0,
+  monday: 1,
+  tuesday: 2,
+  wednesday: 3,
+  thursday: 4,
+  friday: 5,
+  saturday: 6
+};
 
+// Initialize localizer with default values
+const initializeLocalizer = () => {
+  // Get saved start day from localStorage or default to Sunday
+  const savedStartDay = typeof window !== 'undefined' 
+    ? localStorage.getItem("calendar-start-day") || "sunday" 
+    : "sunday";
+  
+  // Set first day of week
+  moment.updateLocale('en', { week: { dow: dayMap[savedStartDay] } });
+  return momentLocalizer(moment);
+};
 
-const localizer = momentLocalizer(moment);
+// Create localizer
+const localizer = initializeLocalizer();
 
 export default function CalendarPage() {
   const [events, setEvents] = useState([
@@ -37,6 +59,24 @@ export default function CalendarPage() {
       title: 'Sample Event',
     }
   ]);
+
+  // Re-initialize localizer when component mounts or when localStorage changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const savedStartDay = localStorage.getItem("calendar-start-day") || "sunday";
+      moment.updateLocale('en', { week: { dow: dayMap[savedStartDay] } });
+      // Force a re-render
+      setEvents([...events]);
+    };
+
+    // Listen for storage changes
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [events]);
 
   const [newEvent, setNewEvent] = useState({
     title: '',
@@ -57,7 +97,11 @@ export default function CalendarPage() {
 
   return (
     <div className="calendar-container" style={{ padding: '20px' }}>
-      <SidebarProvider>
+      <SidebarProvider style={{ 
+        "--sidebar-width": "15rem", 
+        "--sidebar-width-mobile": "5rem", 
+        "--sidebar-width-icon": "3rem" 
+      } as React.CSSProperties}>
       <SidebarInset>
         <header className="flex h-5 shrink-0 items-center gap-2">
           <Dialog>

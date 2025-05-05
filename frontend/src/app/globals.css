@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
 
@@ -131,3 +134,27 @@
   }
 }
 
+.theme-green {
+  --color-primary: hsl(123, 39%, 35%);
+  --color-secondary: hsl(123,39%,50%);
+}
+
+.theme-orange {
+  --color-primary: hsl(25, 100%, 55%);
+  --color-secondary: hsl(25,100%,65%); 
+}
+
+.theme-purple {
+  --color-primary: hsl(270, 100%, 65%);
+  --color-secondary: hsl(270,100%,75%);
+}
+
+.theme-pink {
+  --color-primary: hsl(334, 63%, 50%);;
+  --color-secondary: hsl(334,63%,75%);
+}
+
+.theme-red {
+  --color-primary: hsl(0, 77%, 58%);
+  --color-secondary: hsl(0, 55%, 58%);
+}
