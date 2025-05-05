@@ -33,7 +33,7 @@ export default function AccountProfile() {
                   <label className="block text-sm font-medium text-gray-600 mb-1">Name</label>
                   <input
                     type="text"
-                    // className="w-full border-b-2 border-gray-400 bg-transparent pb-1 focus:outline-none focus:border-teal-500"
+                    className="w-full border-b-2 border-gray-400 bg-transparent pb-1 focus:outline-none focus:border-teal-500"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
@@ -42,7 +42,7 @@ export default function AccountProfile() {
                   <label className="block text-sm font-medium text-gray-600 mb-1">Birthday</label>
                   <input
                     type="text"
-                    // className="w-full border-b-2 border-gray-400 bg-transparent pb-1 focus:outline-none focus:border-teal-500"
+                    className="w-full border-b-2 border-gray-400 bg-transparent pb-1 focus:outline-none focus:border-teal-500"
                     value={formData.birthday}
                     onChange={(e) => setFormData({...formData, birthday: e.target.value})}
                   />
