@@ -1,9 +1,7 @@
 from collections.abc import Callable
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime, timedelta, date
 from typing import Optional, ClassVar
-
-from pydantic import BaseModel, Field
-
+from pydantic import BaseModel, Field, model_validator
 from backend.schemas.category import CategoryResponse
 
 
@@ -17,6 +15,14 @@ class HabitBase(BaseModel):
     description: str | None = None
     completed: bool = False
     category_id: int
+
+    @model_validator(mode='after')
+    def validate_date(self):
+        try:
+            date(self.year, self.month, self.day)
+        except ValueError:
+            raise ValueError("Invalid date: year, month, and day must form a valid calendar date")
+        return self
 
 class HabitCreate(HabitBase):
     pass
