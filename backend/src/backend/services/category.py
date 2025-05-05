@@ -30,6 +30,8 @@ def get_category_by_id(db: Session, category_id: int, user_id: int):
     )
 
 def update_category_by_id(db: Session, category_id: int, category: CategoryBase, user_id: int):
+    if get_category_by_name(db, category.name):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Name already exists")
     db_category = get_category_by_id(db, category_id, user_id)
     if db_category is None:
         return None
