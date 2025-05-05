@@ -1,15 +1,67 @@
+'use client'
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+//added
+import { useState } from "react" 
+import { useRouter } from "next/navigation"
+import { API_HOST_BASE_URL } from "@/lib/constants" 
+//
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  //
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
+    event.preventDefault()
+    setLoading(true)
+    setError(null)
+
+    const body = new URLSearchParams()
+    body.append("username", email)
+    body.append("password", password)
+    body.append("grant_type", "password")
+
+    try {
+      const response = await fetch(`${API_HOST_BASE_URL}/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: body.toString(),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.detail || response.statusText)
+      }
+
+      const {access_token} = await response.json()
+      localStorage.setItem("access_token", access_token)
+      router.push("/planner") // Redirect to the dashboard after successful login
+    }
+    catch (error: any) {
+      setError(error.message)
+    }
+    finally {
+      setLoading(false)
+    }
+  }
+  //
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form>
+      <form /* added */ onSubmit = {handleSubmit} className = "flex flex-col gap-6">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <h1 className="text-xl font-bold">Welcome to <span className="text-(--accentcolor)">Calendar</span><span className="text-(--accentcolor2)">+</span></h1>
@@ -28,6 +80,8 @@ export function LoginForm({
                 type="email"
                 placeholder="email@example.com"
                 required
+                value = {email}
+                onChange = {(event) => setEmail(event.target.value)}
               />
             </div>
             <div className="grid gap-3">
@@ -37,6 +91,8 @@ export function LoginForm({
                 type="password"
                 placeholder="*********"
                 required
+                value = {password}
+                onChange = {(event) => setPassword(event.target.value)}
               />
             </div>
             <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)">
