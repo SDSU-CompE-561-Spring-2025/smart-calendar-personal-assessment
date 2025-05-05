@@ -3,8 +3,15 @@ Our smart calendar web application will serve to promote users to develop an org
 While it primarily serves as a calendar, users can customize their experience and utilize several features on our application such as weekly progress reports and habit trackers.
 With our application, users can easily organize their schedules, goals, habits, and lives.
 
-How to setup Swagger:
+How to setup Backend:
 1) change directory into /smart-calendar-personal-assessment/backend
 2) run "uv add fastapi" to get a venv folder in the project
 3) run "hatch run dev" to start the program on your local host
 4) open "http://127.0.0.1:8000/docs#/" on your browser
+
+How to setup Frontend:
+1) change directory into /smart-calendar-personal-assessment/frontend
+2) install nodejs
+3) run "npm install"
+4) run "npm run dev" to start the program on your local host
+5) open http://localhost:3000
