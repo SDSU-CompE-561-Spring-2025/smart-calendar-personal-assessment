@@ -64,7 +64,7 @@ export function LoginForm({
       <form /* added */ onSubmit = {handleSubmit} className = "flex flex-col gap-6">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
-            <h1 className="text-xl font-bold">Welcome to <span className="text-(--accentcolor)">Calendar</span><span className="text-(--accentcolor2)">+</span></h1>
+            <h1 className="text-xl font-bold">Welcome to <span className="text-(--accentcolor) text-2xl">Calendar</span><span className="text-(--accentcolor2) text-2xl">+</span></h1>
             <div className="text-center text-sm">
               Don&apos;t have an account?{" "}
               <a href="/signup" className="underline underline-offset-4">
@@ -96,7 +96,7 @@ export function LoginForm({
               />
             </div>
             <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)">
-              Login
+              Sign In
             </Button>
           </div>
         </div>
