@@ -139,21 +139,6 @@ export function SettingsForm({
                 </Select>
               </div>
 
-              <div className="grid gap-3">
-                <Label htmlFor="timezone">Time Zone</Label>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Time Zone" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="utc">UTC</SelectItem>
-                    <SelectItem value="pst">PST</SelectItem>
-                    <SelectItem value="est">EST</SelectItem>
-                    <SelectItem value="cst">CST</SelectItem>
-                    <SelectItem value="mst">MST</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>  
               <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)">
                 Save Settings
               </Button>
