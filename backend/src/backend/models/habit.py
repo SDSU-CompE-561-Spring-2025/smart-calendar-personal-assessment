@@ -21,6 +21,8 @@ class Habit(Base):
 
     user = relationship("User", back_populates="habits")
     category = relationship("Category", back_populates="habits")
+    habit_logs = relationship("HabitLog", back_populates="habit", cascade="all, delete-orphan")
+
 
     @property
     def day_list(self):

@@ -2,9 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 import backend.services.habit as habit_service
 import backend.services.user as user_service
+import backend.services.habitLog as habitLog_service
 from backend.core.auth import decode_access_token, oauth_scheme
 from backend.core.dependencies import get_db
-from backend.schemas.habit import HabitCreate, HabitResponse, HabitCompleteUpdate, HabitUpdate
+from backend.schemas.habit import HabitCreate, HabitResponse, HabitUpdate
+from backend.schemas.habitLog import HabitLogCreate, HabitLogResponse
 from backend.models.category import Category
 from typing import Annotated
 from datetime import date
@@ -71,24 +73,38 @@ def get_habits_for_date(
 
     return habit_service.get_habits_for_date(db, user_id, date_query)
 
-@router.patch("/{habit_id}/complete", response_model=HabitResponse)
-def update_habit_completion(
+@router.post("/{habit_id}/log", response_model=HabitLogResponse)
+def log_habit_completion(
     habit_id: int,
-    update_data: HabitCompleteUpdate,
+    log_data: HabitLogCreate,
     db: Session = Depends(get_db),
     token: str = Depends(oauth_scheme)
 ):
     email = decode_access_token(token).email
     user_id = user_service.get_user_by_email(db, email).id
 
-    updated = habit_service.update_habit_completion(
-        db, user_id=user_id, habit_id=habit_id, completed=update_data.completed
-    )
+    log = habitLog_service.mark_habit_completed_for_date(db, habit_id, user_id, log_data.date)
 
-    if not updated:
+    if log is None:
         raise HTTPException(status_code=404, detail="Habit not found")
 
-    return updated
+    return log
+
+@router.get("/{habit_id}/logs", response_model=list[HabitLogResponse])
+def get_habit_logs(
+    habit_id: int,
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth_scheme)
+):
+    email = decode_access_token(token).email
+    user_id = user_service.get_user_by_email(db, email).id
+
+    logs = habitLog_service.get_logs_for_habit(db, habit_id, user_id)
+
+    if not logs:
+        raise HTTPException(status_code=404, detail="Habit not found or no logs")
+
+    return logs
 
 @router.put("/{habit_id}", response_model=HabitResponse)
 def update_habit(
