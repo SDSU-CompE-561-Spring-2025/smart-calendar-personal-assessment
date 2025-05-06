@@ -208,7 +208,7 @@ export default function CalendarPage() {
                   events={events}
                   startAccessor="start"
                   endAccessor="end"
-                  style={{ height: 1000 }}
+                  style={{ height: 500 }}
                   views={['month', 'week', 'day']}
                   defaultView='month'
                   defaultDate={new Date()}
