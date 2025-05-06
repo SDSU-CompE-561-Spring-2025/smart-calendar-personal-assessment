@@ -1,21 +1,18 @@
 'use client'
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
-//added
-import { useState } from "react" 
-import { useRouter } from "next/navigation"
+import { cn }                from "@/lib/utils"
 import { API_HOST_BASE_URL } from "@/lib/constants" 
-//
+import { Button }            from "@/components/ui/button"
+import { Input }             from "@/components/ui/input"
+import { Label }             from "@/components/ui/label"
+
+import { useState }  from "react" 
+import { useRouter } from "next/navigation"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  //
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -61,7 +58,7 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form /* added */ onSubmit = {handleSubmit} className = "flex flex-col gap-6">
+      <form onSubmit = {handleSubmit} className = "flex flex-col gap-6">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <h1 className="text-xl font-bold">Welcome to <span className="text-(--accentcolor) text-2xl">Calendar</span><span className="text-(--accentcolor2) text-2xl">+</span></h1>
