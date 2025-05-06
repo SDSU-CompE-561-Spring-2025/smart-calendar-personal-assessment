@@ -5,6 +5,7 @@ import { API_HOST_BASE_URL } from "@/lib/constants"
 import { Button }            from "@/components/ui/button"
 import { Input }             from "@/components/ui/input"
 import { Label }             from "@/components/ui/label"
+import { toast } from "sonner"
 
 import { useState }  from "react" 
 import { useRouter } from "next/navigation"
@@ -93,7 +94,16 @@ export function LoginForm({
                 onChange = {(event) => setPassword(event.target.value)}
               />
             </div>
-            <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)">
+            <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)"
+                onClick={() => {
+                  if (error) {
+                    toast("Account not found.", {
+                      description: "Please make sure you have an account with us.",
+                    })
+                  } 
+                }
+              }
+            >
               Sign In
             </Button>
           </div>
