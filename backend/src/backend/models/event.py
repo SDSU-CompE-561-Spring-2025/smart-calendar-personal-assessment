@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Interval
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from backend.core.database import Base
@@ -9,10 +9,9 @@ class Event(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, nullable=False)
-    date = Column(DateTime, nullable=False)
-    duration = Column(Interval, nullable=False)
+    start_time = Column(DateTime, nullable=False)
+    end_time = Column(DateTime, nullable=False)
     created_at = Column(DateTime, default=datetime.now)
-    description = Column(String, nullable=True)
 
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Link to user
     calendar_id = Column(Integer, ForeignKey('calendars.id'), nullable = False)
