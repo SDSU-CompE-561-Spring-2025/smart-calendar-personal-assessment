@@ -1,16 +1,17 @@
 'use client'
 
-import AccountProfile from "@/components/account-profile"
+import { AccountForm } from "@/components/account-profile"
+import { Headerinstance } from "@/components/header"
 
 export default function AccountPage() {
   return (
-    <div className="flex h-full w-full flex-col p-4 lg:p-0">
-      <div className="flex h-full w-full flex-col items-center justify-center">
-        <div className="w-full max-w-4xl flex justify-center">
-          <AccountProfile />
+    <div>
+      <Headerinstance />
+      <div className="flex flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+        <div className="w-full max-w-sm">
+          <AccountForm />
         </div>
       </div>
     </div>
   )
 }
-
