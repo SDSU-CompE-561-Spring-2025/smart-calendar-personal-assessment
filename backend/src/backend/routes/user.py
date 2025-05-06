@@ -8,17 +8,17 @@ from backend.core.auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
 from backend.core.dependencies import get_db
 import backend.services.user as user_service
 from backend.schemas.token import Token
-from backend.schemas.user import UserCreate, UserResponse
+from backend.schemas.user import UserBase, UserResponse, DeleteUserPayload
 
 router = APIRouter()
 
 # User
-@router.post("", response_model = UserResponse)
-def create_user(*, db: Session = Depends(get_db), first_name: str = "John", last_name: str = "Doe", email: str, password: str):
-    user = user_service.create_user(db = db, user = UserCreate(first_name=first_name, last_name=last_name, email=email, password=password))
-    if user is None:
+@router.post("", response_model=UserResponse, status_code=201)
+def create_user(*, db: Session = Depends(get_db), user: UserBase):
+    newUser = user_service.create_user(db=db, user=user)
+    if newUser is None:
         raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST, detail = "Invalid Email")
-    return user
+    return newUser  
 
 @router.get("/get_self", response_model=UserResponse)
 def get_self_user(db: Session = Depends(get_db), email: str = None):
@@ -58,8 +58,8 @@ def user_logout(response: Response):
     return {"message": "User Logged Out"}
 
 @router.delete("/{userId}") # needs (user, email, pass)
-def del_user(db: Session = Depends(get_db), email = str, password = str):
-    deleted = user_service.delete_user(db, email, password)
+def del_user(*, db: Session = Depends(get_db), user: DeleteUserPayload):
+    deleted = user_service.delete_user(db, user.email, user.password)
     if(deleted):
       return {"message": "Account Deleted"}
     raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Invalid Email/Password")
