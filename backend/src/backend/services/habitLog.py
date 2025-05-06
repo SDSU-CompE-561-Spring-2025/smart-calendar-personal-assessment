@@ -61,3 +61,25 @@ def get_logs_for_habit(db: Session, habit_id: int, user_id: int) -> list[HabitLo
         )
         for log in logs
     ]
+
+def get_todays_habit_logs(db: Session, user_id: int) -> list[HabitLogResponse]:
+    today = date.today()
+
+    logs = (
+        db.query(HabitLog)
+        .join(Habit)
+        .filter(HabitLog.user_id == user_id, HabitLog.date == today)
+        .all()
+    )
+
+    return [
+        HabitLogResponse(
+            id=log.id,
+            habit_id=log.habit_id,
+            user_id=log.user_id,
+            date=log.date,
+            created_at=log.created_at,
+            habit_name=log.habit.name  # Accessing via relationship
+        )
+        for log in logs
+    ]

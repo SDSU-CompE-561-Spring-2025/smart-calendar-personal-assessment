@@ -106,6 +106,16 @@ def get_habit_logs(
 
     return logs
 
+@router.get("/habit-logs/today", response_model=list[HabitLogResponse])
+def get_today_logs(
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth_scheme)
+):
+    email = decode_access_token(token).email
+    user_id = user_service.get_user_by_email(db, email).id
+
+    return habitLog_service.get_todays_habit_logs(db, user_id)
+
 @router.put("/{habit_id}", response_model=HabitResponse)
 def update_habit(
     habit_id: int,
