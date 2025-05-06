@@ -1,11 +1,14 @@
+'use client'
+
 import * as React from "react"
 import { NavUser } from "./nav-user"
+import { useRouter } from "next/navigation"
 
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
-  SidebarGroup, 
+  SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
@@ -14,7 +17,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-
 const data = {
   user: {
     name: "User",
@@ -22,22 +24,20 @@ const data = {
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
-    {
-      title: "Account",
-      url: "/account",
-    },
-    {
-      title: "Setting",
-      url: "/settings",
-    },
-    {
-      title: "Logout",
-      url: "/logout",
-    },
+    { title: "Account", url: "/account" },
+    { title: "Setting", url: "/settings" },
+    { title: "Logout", action: "logout" },
   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const router = useRouter()
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    router.push("/signin");
+  }
+
   return (
     <Sidebar {...props}>
       <SidebarHeader className="h-15 border-b border-sidebar-border">
@@ -51,9 +51,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {data.navMain.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url} className="font-medium">
-                      {item.title}
-                    </a>
+                    {item.action === "logout" ? (
+                      <button onClick={handleLogout} className="font-medium">
+                        {item.title}
+                      </button>
+                    ) : (
+                      <a href={item.url} className="font-medium">
+                        {item.title}
+                      </a>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
