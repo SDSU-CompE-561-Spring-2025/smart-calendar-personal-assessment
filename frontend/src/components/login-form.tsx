@@ -38,13 +38,15 @@ export function LoginForm({
         body: body.toString(),
       })
 
+      const data = await response.json()
+      console.log("hit data", data)
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.detail || response.statusText)
+        throw new Error(data.detail || response.statusText)
       }
-
-      const {access_token} = await response.json()
+      const {access_token} = data
       localStorage.setItem("access_token", access_token)
+      console.log("Login Response:", access_token)
+
       router.push("/planner") // Redirect to the dashboard after successful login
     }
     catch (error: any) {
@@ -54,7 +56,6 @@ export function LoginForm({
       setLoading(false)
     }
   }
-  //
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
