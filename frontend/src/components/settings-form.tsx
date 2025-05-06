@@ -138,6 +138,7 @@ export function SettingsForm({
                   </SelectContent>
                 </Select>
               </div>
+
               <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)">
                 Save Settings
               </Button>
