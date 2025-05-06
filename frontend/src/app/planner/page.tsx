@@ -59,15 +59,40 @@ export default function CalendarPage() {
   ]);
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      const savedStartDay = localStorage.getItem("calendar-start-day") || "sunday";
-      moment.updateLocale('en', { week: { dow: dayMap[savedStartDay] } });
-      setEvents([...events]); // trigger re-render
+    const fetchEvents = async () => {
+      const token = localStorage.getItem("access_token")
+      if (!token) {
+        console.warn("No access token found")
+        return
+      }
+  
+      try {
+        const res = await fetch(`${API_HOST_BASE_URL}/event`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+  
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || "Unauthorized");
+        }
+  
+        const data = await res.json();
+        const formattedEvents = data.map((event: any) => ({
+          title: event.name,
+          start: new Date(event.start_time),
+          end: new Date(event.end_time),
+        }));
+  
+        setEvents(formattedEvents);
+      } catch (error) {
+        console.error("Error loading events:", error);
+      }
     };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, [events]);
+  
+    fetchEvents();
+  }, []);
 
   const [newEvent, setNewEvent] = useState({
     title: '',
