@@ -52,11 +52,6 @@ async def login_for_access_token(
     )
     return {"access_token": access_token, "token_type": "bearer", "email": user.email}
 
-@router.get("/logout")
-def user_logout(response: Response):
-    response.delete_cookie("access_token")
-    return {"message": "User Logged Out"}
-
 @router.delete("/{userId}") # needs (user, email, pass)
 def del_user(*, db: Session = Depends(get_db), user: DeleteUserPayload):
     deleted = user_service.delete_user(db, user.email, user.password)
