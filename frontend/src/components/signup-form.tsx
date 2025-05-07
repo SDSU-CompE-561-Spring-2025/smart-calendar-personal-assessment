@@ -53,7 +53,7 @@ export function SignUpForm({
       }
 
       // Redirect to dashboard or verification page after successful signup
-      router.push("/planner")
+      router.push("/signin")
     }
     catch (err: any) {
       setError(err.message)

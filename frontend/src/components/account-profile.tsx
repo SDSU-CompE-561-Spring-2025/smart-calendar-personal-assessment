@@ -30,7 +30,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
             Manage your account details.
           </div>
           <Avatar className="w-24 h-24 rounded-[50] border-4 border-gray-200 overflow-hidden flex items-center justify-center">
-            <AvatarImage src="/images/defaultusericon.png" alt="User Avatar" />
+            <AvatarImage src="/potthing.jpg" alt="User Avatar" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
         </div>
