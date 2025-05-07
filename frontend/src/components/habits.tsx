@@ -13,12 +13,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+
 import {
   DragDropContext,
   Droppable,
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
+
 
 import {
   AlertDialog,
@@ -214,6 +216,7 @@ const DragAndDropList: React.FC = () => {
     }
   };
 
+
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
@@ -262,6 +265,7 @@ const DragAndDropList: React.FC = () => {
 
   return (
     <div className="p-5 text-foreground">
+
       <h2 className="text-xl font-bold mb-4 text-center">Habits List</h2>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="list">
@@ -271,10 +275,12 @@ const DragAndDropList: React.FC = () => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
+
               {habits.map((habit, index) => {
                 const isCompleted = completedHabits.has(habit.id);
                 return (
                 <Draggable key={String(habit.id)} draggableId={String(habit.id)} index={index}>
+
                   {(provided, snapshot) => (
                     <li
                       ref={provided.innerRef}
@@ -289,6 +295,7 @@ const DragAndDropList: React.FC = () => {
                         ${isCompleted ? "opacity-60" : "opacity-100"}
                         `}
                     >
+
                       <div className="flex items-center justify-between">
                         <div className="flex items-center flex-1">
                           <Checkbox 
@@ -354,6 +361,7 @@ const DragAndDropList: React.FC = () => {
                             </AlertDialogContent>
                           </AlertDialog>
                         </div>
+
                       </div>
                     </li>
                   )}

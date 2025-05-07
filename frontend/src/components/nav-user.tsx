@@ -1,18 +1,19 @@
 'use client'
 
+import React, { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import {jwtDecode} from "jwt-decode"
 import {
   BadgeCheck,
   ChevronsUpDown,
   Settings,
   LogOut,
 } from "lucide-react"
-
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,27 +23,32 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { API_HOST_BASE_URL } from "@/lib/constants"
 
 import { useState, useEffect } from "react"
 import { useTheme } from "@/components/theme-provider"
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+interface DisplayUser {
+  name: string
+  email: string
+}
+
+interface JWTPayload {
+  sub: string // email stored in the token
+}
+
+export function NavUser() {
+  const [user, setUser] = useState<DisplayUser | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const { isMobile } = useSidebar()
+
   const [mounted, setMounted] = useState(false)
   
   useEffect(() => {
@@ -51,6 +57,7 @@ export function NavUser({
 
   if (!mounted) {
     return null
+
   }
 
   return (
@@ -62,11 +69,13 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-accent data-[state=open]:text-accent-foreground bg-background text-foreground"
             >
+
               <Avatar className="h-8 w-8 rounded-lg bg-background">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
                   {user.name ? user.name[0] : 'U'}
                 </AvatarFallback>
+
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -88,6 +97,7 @@ export function NavUser({
                   <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
                     {user.name ? user.name[0] : 'U'}
                   </AvatarFallback>
+
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
@@ -98,14 +108,17 @@ export function NavUser({
             <DropdownMenuSeparator className="bg-border" />
             <DropdownMenuGroup>
               <a href="/account">
+
                 <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground">
                   <BadgeCheck className="mr-2 h-4 w-4"/>
+
                   Account
                 </DropdownMenuItem>
               </a>
               <a href="/settings">
                 <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground">
                   <Settings className="mr-2 h-4 w-4"/>
+
                   Settings
                 </DropdownMenuItem>
               </a>
@@ -114,6 +127,7 @@ export function NavUser({
             <a href="/signin">
               <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground">
                 <LogOut className="mr-2 h-4 w-4"/>
+
                 Log out
               </DropdownMenuItem>
             </a>
