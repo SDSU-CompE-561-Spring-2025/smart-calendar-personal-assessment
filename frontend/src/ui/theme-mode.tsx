@@ -1,60 +1,34 @@
 'use client'
 
-import { useDarkMode } from "@rbnd/react-dark-mode"
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Moon, Sun, Monitor } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useTheme } from "@/components/theme-provider"
 
 // Available color themes
 const COLOR_THEMES = [
-  { name: "Default", value: "" },
+  { name: "Default", value: "default" },
   { name: "Green", value: "theme-green" },
   { name: "Orange", value: "theme-orange" },
   { name: "Purple", value: "theme-purple" },
   { name: "Pink", value: "theme-pink" },
   { name: "Red", value: "theme-red" }
-]
+] as const;
+
+type ColorTheme = (typeof COLOR_THEMES)[number]['value'];
 
 const ThemeToggle = () => {
-  const { mode, setMode } = useDarkMode()
-  const [colorTheme, setColorTheme] = useState<string>("")
+  const { theme, colorTheme, setTheme, setColorTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-  // Load saved color theme on mount
+  // Only render the toggle after mounting on the client to avoid hydration mismatch
   useEffect(() => {
-    const savedTheme = localStorage.getItem("color-theme") || ""
-    setColorTheme(savedTheme)
-    
-    // Apply the theme class to the document
-    if (savedTheme) {
-      document.documentElement.classList.forEach(className => {
-        if (className.startsWith('theme-')) {
-          document.documentElement.classList.remove(className)
-        }
-      })
-      if (savedTheme !== "default") {
-        document.documentElement.classList.add(savedTheme)
-      }
-    }
+    setMounted(true)
   }, [])
 
-  // Handle color theme change
-  const handleColorThemeChange = (theme: string) => {
-    // Remove any existing theme classes
-    document.documentElement.classList.forEach(className => {
-      if (className.startsWith('theme-')) {
-        document.documentElement.classList.remove(className)
-      }
-    })
-    
-    // Add the new theme class if it's not the default
-    if (theme !== "") {
-      document.documentElement.classList.add(theme)
-    }
-    
-    // Save to localStorage
-    localStorage.setItem("color-theme", theme)
-    setColorTheme(theme)
+  if (!mounted) {
+    return null
   }
 
   return (
@@ -63,9 +37,9 @@ const ThemeToggle = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">
-            {mode === "dark" ? (
+            {theme === "dark" ? (
               <Moon className="h-[1.2rem] w-[1.2rem]" />
-            ) : mode === "light" ? (
+            ) : theme === "light" ? (
               <Sun className="h-[1.2rem] w-[1.2rem]" />
             ) : (
               <Monitor className="h-[1.2rem] w-[1.2rem]" />
@@ -74,15 +48,15 @@ const ThemeToggle = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => setMode("light")}>
+          <DropdownMenuItem onClick={() => setTheme("light")}>
             <Sun className="mr-2 h-4 w-4" />
             <span>Light</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setMode("dark")}>
+          <DropdownMenuItem onClick={() => setTheme("dark")}>
             <Moon className="mr-2 h-4 w-4" />
             <span>Dark</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setMode("system")}>
+          <DropdownMenuItem onClick={() => setTheme("system")}>
             <Monitor className="mr-2 h-4 w-4" />
             <span>System</span>
           </DropdownMenuItem>
@@ -94,12 +68,12 @@ const ThemeToggle = () => {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="w-[200px] justify-between">
             <span>
-              {colorTheme ? COLOR_THEMES.find(t => t.value === colorTheme)?.name : "Default"}
+              {COLOR_THEMES.find(t => t.value === colorTheme)?.name || "Default"}
             </span>
             <div 
-              className="h-4 w-4 rounded-full" 
+              className={`h-4 w-4 rounded-full ${colorTheme !== "default" ? colorTheme : ""}`} 
               style={{ 
-                backgroundColor: colorTheme ? "var(--color-primary)" : "currentColor"
+                backgroundColor: colorTheme !== "default" ? "var(--color-primary)" : "currentColor"
               }} 
             />
           </Button>
@@ -108,14 +82,14 @@ const ThemeToggle = () => {
           {COLOR_THEMES.map((theme) => (
             <DropdownMenuItem 
               key={theme.value} 
-              onClick={() => handleColorThemeChange(theme.value)}
+              onClick={() => setColorTheme(theme.value as ColorTheme)}
               className="flex justify-between"
             >
               <span>{theme.name}</span>
               <div 
-                className={`h-4 w-4 rounded-full ${theme.value}`} 
+                className={`h-4 w-4 rounded-full ${theme.value !== "default" ? theme.value : ""}`} 
                 style={{ 
-                  backgroundColor: theme.value ? "var(--color-primary)" : "currentColor"
+                  backgroundColor: theme.value !== "default" ? "var(--color-primary)" : "currentColor"
                 }} 
               />
             </DropdownMenuItem>

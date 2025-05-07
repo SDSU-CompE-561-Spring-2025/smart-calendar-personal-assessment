@@ -11,8 +11,8 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { XIcon } from "lucide-react"
-import ThemeToggle from "@/ui/theme-mode"
-// import { useDarkMode } from "@rbnd/react-dark-mode"
+import { useTheme } from "@/components/theme-provider"
+
 import { useEffect, useState } from "react"
 
 // Available color themes from the ThemeToggle component
@@ -29,42 +29,30 @@ export function SettingsForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { mode, setMode } = useDarkMode()
-  const [colorTheme, setColorTheme] = useState<string>("default")
+  const { theme, colorTheme, setTheme, setColorTheme } = useTheme()
   const [calendarStartDay, setCalendarStartDay] = useState<string>("sunday")
+  const [mounted, setMounted] = useState(false)
 
-  // Load saved color theme and calendar start day on mount
+  // Only access localStorage after component is mounted
   useEffect(() => {
-    const savedTheme = localStorage.getItem("color-theme") || "default"
+    setMounted(true)
     const savedStartDay = localStorage.getItem("calendar-start-day") || "sunday"
-    
-    setColorTheme(savedTheme)
     setCalendarStartDay(savedStartDay)
   }, [])
-
-  // Handle color theme change
-  const handleColorThemeChange = (theme: string) => {
-    // Remove any existing theme classes
-    document.documentElement.classList.forEach(className => {
-      if (className.startsWith('theme-')) {
-        document.documentElement.classList.remove(className)
-      }
-    })
-    
-    // Add the new theme class if it's not the default
-    if (theme !== "default") {
-      document.documentElement.classList.add(theme)
-    }
-    
-    // Save to localStorage
-    localStorage.setItem("color-theme", theme)
-    setColorTheme(theme)
-  }
 
   // Handle calendar start day change
   const handleCalendarStartChange = (day: string) => {
     localStorage.setItem("calendar-start-day", day)
     setCalendarStartDay(day)
+  }
+
+  // If not mounted, show a loading state
+  if (!mounted) {
+    return (
+      <div className="flex justify-center py-8">
+        <p>Loading settings...</p>
+      </div>
+    )
   }
 
   return (
@@ -85,7 +73,7 @@ export function SettingsForm({
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="theme">Theme Mode</Label>
-                <Select value={mode} onValueChange={(value) => setMode(value as "light" | "dark" | "system")}>
+                <Select value={theme} onValueChange={(value) => setTheme(value as "light" | "dark" | "system")}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Theme Mode" />
                   </SelectTrigger>
@@ -99,7 +87,7 @@ export function SettingsForm({
 
               <div className="grid gap-3">
                 <Label htmlFor="color-theme">Color Theme</Label>
-                <Select value={colorTheme} onValueChange={handleColorThemeChange}>
+                <Select value={colorTheme} onValueChange={setColorTheme}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Color Theme" />
                   </SelectTrigger>

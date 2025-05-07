@@ -22,10 +22,16 @@ class HabitBase(BaseModel):
 
     @model_validator(mode='after')
     def validate_quantity_or_duration(self):
-        if self.quantity in [None or 0] and self.duration in [None or 0]:
+        # More robust validation for quantity and duration
+        has_quantity = self.quantity is not None and self.quantity > 0
+        has_duration = self.duration is not None and self.duration > 0
+        
+        if not has_quantity and not has_duration:
             raise ValueError("You must provide either quantity or duration.")
-        if self.quantity not in [None or 0] and self.duration not in [None or 0]:
+        
+        if has_quantity and has_duration:
             raise ValueError("Provide only one: quantity or duration, not both.")
+            
         return self
 
 class HabitCreate(HabitBase):
@@ -56,10 +62,17 @@ class HabitUpdate(BaseModel):
 
     @model_validator(mode='after')
     def validate_quantity_or_duration(self):
-        if self.quantity in [None or 0] and self.duration in [None or 0]:
-            raise ValueError("You must provide either quantity or duration.")
-        if self.quantity not in [None or 0] and self.duration not in [None or 0]:
+        # Skip validation if neither field is being updated
+        if self.quantity is None and self.duration is None:
+            return self
+            
+        # More robust validation for quantity and duration
+        has_quantity = self.quantity is not None and self.quantity > 0
+        has_duration = self.duration is not None and self.duration > 0
+        
+        if has_quantity and has_duration:
             raise ValueError("Provide only one: quantity or duration, not both.")
+            
         return self
 
 class HabitResponse(HabitBase):

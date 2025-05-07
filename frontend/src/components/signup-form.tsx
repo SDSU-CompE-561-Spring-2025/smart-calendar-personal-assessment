@@ -6,6 +6,7 @@ import { Button }            from "@/components/ui/button"
 import { Input }             from "@/components/ui/input"
 import { Label }             from "@/components/ui/label"
 import { toast } from "sonner"
+import { useAuth } from "@/hooks/useAuth"
 
 import { useState }  from "react" 
 import { useRouter } from "next/navigation"
@@ -15,6 +16,7 @@ export function SignUpForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter()
+  const { login } = useAuth()
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
@@ -23,6 +25,39 @@ export function SignUpForm({
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
+  // Function to log in the user after successful registration
+  const loginAfterSignup = async () => {
+    try {
+      const body = new URLSearchParams()
+      body.append("username", email)
+      body.append("password", password)
+      body.append("grant_type", "password")
+
+      const response = await fetch(`${API_HOST_BASE_URL}/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: body.toString(),
+      })
+
+      const data = await response.json()
+      if (!response.ok) {
+        throw new Error(data.detail || response.statusText)
+      }
+      
+      const { access_token } = data
+      login(access_token) // Use the useAuth hook to set the token and update state
+      toast.success("Account created successfully!")
+      router.push("/planner") // Redirect to the dashboard after successful login
+    } catch (error: any) {
+      console.error("Auto-login error:", error)
+      // If auto-login fails, redirect to login page
+      toast.error("Account created, please log in.")
+      router.push("/signin")
+    }
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setLoading(true)
@@ -30,6 +65,7 @@ export function SignUpForm({
 
     if (password !== confirmPassword) {
       setError("Passwords do not match")
+      setLoading(false)
       return
     }
 
@@ -52,11 +88,14 @@ export function SignUpForm({
         throw new Error(data.detail || "Failed to create user")
       }
 
-      // Redirect to dashboard or verification page after successful signup
-      router.push("/signin")
+      // User was created successfully, now automatically log them in
+      await loginAfterSignup()
     }
     catch (err: any) {
       setError(err.message)
+      toast.error("Registration failed", {
+        description: err.message,
+      })
     }
     finally {
       setLoading(false)

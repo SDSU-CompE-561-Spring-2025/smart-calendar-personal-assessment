@@ -31,14 +31,8 @@ import {
 } from "@/components/ui/sidebar"
 import { API_HOST_BASE_URL } from "@/lib/constants"
 
-interface UserResponse {
-  id: number
-  first_name: string
-  last_name: string
-  email: string
-  verif_code: string
-  acc_created: string
-}
+import { useState, useEffect } from "react"
+import { useTheme } from "@/components/theme-provider"
 
 interface DisplayUser {
   name: string
@@ -54,45 +48,16 @@ export function NavUser() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const { isMobile } = useSidebar()
-  const router = useRouter()
 
+  const [mounted, setMounted] = useState(false)
+  
   useEffect(() => {
-    const token = localStorage.getItem("access_token")
-    if (!token) {
-      router.push("/signin")
-      return
-    }
-    let emailParam: string
-    try {
-      const { sub } = jwtDecode<JWTPayload>(token)
-      emailParam = sub
-    } catch (e) {
-      setError("Invalid token")
-      setLoading(false)
-      return
-    }
-    const url = `${API_HOST_BASE_URL}/user/get_self?email=${encodeURIComponent(
-      emailParam
-    )}`
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Error ${res.status}`)
-        return res.json()
-      })
-      .then((data: UserResponse) => {
-        setUser({ name: `${data.first_name} ${data.last_name}`, email: data.email })
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [router])
+    setMounted(true)
+  }, [])
 
-  if (loading) return <div className="p-4">Loading user...</div>
-  if (error || !user)
-    return <div className="p-4 text-red-600">Error: {error || "Failed to load user"}</div>
+  if (!mounted) {
+    return null
 
-  const handleLogout = () => {
-    localStorage.removeItem("access_token")
-    router.push("/signin")
   }
 
   return (
@@ -102,21 +67,25 @@ export function NavUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-accent data-[state=open]:text-accent-foreground bg-background text-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage alt={user.name} />
-                <AvatarFallback className="rounded-lg">U</AvatarFallback>
+
+              <Avatar className="h-8 w-8 rounded-lg bg-background">
+                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+                  {user.name ? user.name[0] : 'U'}
+                </AvatarFallback>
+
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-card text-card-foreground"
             side={isMobile ? "bottom" : "right"}
             align="start"
             sideOffset={4}
@@ -124,34 +93,41 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage alt={user.name} />
-                  <AvatarFallback className="rounded-lg">U</AvatarFallback>
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+                    {user.name ? user.name[0] : 'U'}
+                  </AvatarFallback>
+
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className="bg-border" />
             <DropdownMenuGroup>
               <a href="/account">
-                <DropdownMenuItem>
-                  <BadgeCheck />
+
+                <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground">
+                  <BadgeCheck className="mr-2 h-4 w-4"/>
+
                   Account
                 </DropdownMenuItem>
               </a>
               <a href="/settings">
-                <DropdownMenuItem>
-                  <Settings />
+                <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground">
+                  <Settings className="mr-2 h-4 w-4"/>
+
                   Settings
                 </DropdownMenuItem>
               </a>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className="bg-border" />
             <a href="/signin">
-              <DropdownMenuItem onSelect={handleLogout} className="cursor-pointer">
-                <LogOut />
+              <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground">
+                <LogOut className="mr-2 h-4 w-4"/>
+
                 Log out
               </DropdownMenuItem>
             </a>
