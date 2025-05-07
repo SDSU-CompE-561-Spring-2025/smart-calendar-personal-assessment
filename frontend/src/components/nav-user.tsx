@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import {jwtDecode} from "jwt-decode"
+
 import {
   BadgeCheck,
   ChevronsUpDown,
@@ -30,25 +30,20 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { API_HOST_BASE_URL } from "@/lib/constants"
-
-import { useState, useEffect } from "react"
 import { useTheme } from "@/components/theme-provider"
 
 interface DisplayUser {
   name: string
   email: string
+  avatar?: string
 }
 
 interface JWTPayload {
   sub: string // email stored in the token
 }
 
-export function NavUser() {
-  const [user, setUser] = useState<DisplayUser | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+export function NavUser({ user }: { user: DisplayUser }) {
   const { isMobile } = useSidebar()
-
   const [mounted, setMounted] = useState(false)
   
   useEffect(() => {
@@ -57,7 +52,6 @@ export function NavUser() {
 
   if (!mounted) {
     return null
-
   }
 
   return (

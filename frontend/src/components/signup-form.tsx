@@ -7,6 +7,7 @@ import { Input }             from "@/components/ui/input"
 import { Label }             from "@/components/ui/label"
 import { toast } from "sonner"
 import { useAuth } from "@/hooks/useAuth"
+import { AlertCircle } from "lucide-react"
 
 import { useState }  from "react" 
 import { useRouter } from "next/navigation"
@@ -104,7 +105,7 @@ export function SignUpForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form onSubmit = {handleSubmit} className = "flex flex-col gap-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <h1 className="text-xl font-bold">Sign up for <span className="text-(--accentcolor) text-2xl">Calendar</span><span className="text-(--accentcolor2) text-2xl">+</span></h1>
@@ -115,6 +116,15 @@ export function SignUpForm({
               </a>
             </div>
           </div>          
+          
+          {/* Error message display */}
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded flex items-start">
+              <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
+              <span>{error}</span>
+            </div>
+          )}
+          
           <div className="flex flex-col gap-6">
             <div className="grid grid-cols-2 gap-6">
               <div className="grid gap-3">
@@ -124,8 +134,8 @@ export function SignUpForm({
                   type="text"
                   placeholder="John"
                   required
-                  value = {firstName}
-                  onChange = {(event) => setFirstName(event.target.value)}
+                  value={firstName}
+                  onChange={(event) => setFirstName(event.target.value)}
                 />
               </div>
               <div className="grid gap-3">
@@ -135,8 +145,8 @@ export function SignUpForm({
                   type="text"
                   placeholder="Doe"
                   required
-                  value = {lastName}
-                  onChange = {(event) => setLastName(event.target.value)}
+                  value={lastName}
+                  onChange={(event) => setLastName(event.target.value)}
                 />
               </div>
             </div>
@@ -147,8 +157,9 @@ export function SignUpForm({
                 type="email"
                 placeholder="email@example.com"
                 required
-                value = {email}
-                onChange = {(event) => setEmail(event.target.value)}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className={error ? "border-red-400 focus-visible:ring-red-400" : ""}
               />
             </div>
             <div className="grid gap-3">
@@ -158,30 +169,27 @@ export function SignUpForm({
                 type="password"
                 placeholder="*********"
                 required
-                value = {password}
-                onChange = {(event) => setPassword(event.target.value)}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className={error && error.includes("password") ? "border-red-400 focus-visible:ring-red-400" : ""}
               />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="password">Retype Password</Label>
+              <Label htmlFor="confirmPassword">Retype Password</Label>
               <Input
-                id="password"
+                id="confirmPassword"
                 type="password"
                 placeholder="*********"
                 required
-                value = {confirmPassword}
-                onChange = {(event) => setConfirmPassword(event.target.value)}                
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                className={error && error.includes("match") ? "border-red-400 focus-visible:ring-red-400" : ""}
               />
             </div>
-            <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)"
-              onClick={() => {
-                if (password !== confirmPassword) {
-                  toast("Account not created.", {
-                    description: "Password is not matching.",
-                  })
-                } 
-              }
-            }
+            <Button 
+              type="submit" 
+              className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)"
+              disabled={loading}
             >
               {loading ? "Signing Up..." : "Sign Up"}
             </Button>

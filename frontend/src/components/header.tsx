@@ -9,17 +9,22 @@ import { LogOut } from 'lucide-react';
 
 export function Headerinstance() {
     const [mounted, setMounted] = useState(false);
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, logout, checkAuth } = useAuth();
     const router = useRouter();
     
     useEffect(() => {
         setMounted(true);
-    }, []);
+        // Verify auth status on mount
+        checkAuth();
+    }, [checkAuth]);
     
     const handleLogout = () => {
         logout();
         router.push('/signin');
     };
+    
+    // Only show the logout button if mounted and logged in
+    const showLogoutButton = mounted && isLoggedIn;
     
     return (
         <header className="w-full border-b border-border py-2 px-4 flex justify-between items-center h-15 bg-background">
@@ -29,7 +34,7 @@ export function Headerinstance() {
                 </Link>
             </div>
             
-            {mounted && isLoggedIn && (
+            {showLogoutButton && (
                 <button 
                     onClick={handleLogout}
                     className="flex items-center gap-2 px-4 py-2 rounded border border-border bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
