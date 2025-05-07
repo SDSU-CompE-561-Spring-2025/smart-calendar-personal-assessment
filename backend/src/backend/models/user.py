@@ -18,3 +18,4 @@ class User(Base):
     habits = relationship("Habit", back_populates = "user")
     calendar = relationship("Calendar", back_populates="user", cascade="all, delete-orphan")
     events = relationship("Event",back_populates="user" )
+    habit_logs = relationship("HabitLog", back_populates="user", cascade="all, delete-orphan")

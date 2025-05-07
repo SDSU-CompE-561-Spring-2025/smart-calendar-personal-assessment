@@ -5,6 +5,7 @@ import { API_HOST_BASE_URL } from "@/lib/constants"
 import { Button }            from "@/components/ui/button"
 import { Input }             from "@/components/ui/input"
 import { Label }             from "@/components/ui/label"
+import { toast } from "sonner"
 
 import { useState }  from "react" 
 import { useRouter } from "next/navigation"
@@ -133,8 +134,17 @@ export function SignUpForm({
                 onChange = {(event) => setConfirmPassword(event.target.value)}                
               />
             </div>
-            <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)">
-              {loading ? "Passwords Don't Match Or Invalid Signup" : "Sign Up"}
+            <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)"
+              onClick={() => {
+                if (password !== confirmPassword) {
+                  toast("Account not created.", {
+                    description: "Password is not matching.",
+                  })
+                } 
+              }
+            }
+            >
+              {loading ? "Signing Up..." : "Sign Up"}
             </Button>
           </div>
         </div>
