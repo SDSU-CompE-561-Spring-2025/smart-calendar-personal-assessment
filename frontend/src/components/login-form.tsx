@@ -6,6 +6,7 @@ import { Button }            from "@/components/ui/button"
 import { Input }             from "@/components/ui/input"
 import { Label }             from "@/components/ui/label"
 import { toast } from "sonner"
+import { useAuth } from "@/hooks/useAuth"
 
 import { useState }  from "react" 
 import { useRouter } from "next/navigation"
@@ -15,6 +16,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter()
+  const { login } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
@@ -40,18 +42,22 @@ export function LoginForm({
       })
 
       const data = await response.json()
-      console.log("hit data", data)
       if (!response.ok) {
         throw new Error(data.detail || response.statusText)
       }
-      const {access_token} = data
-      localStorage.setItem("access_token", access_token)
-      console.log("Login Response:", access_token)
-
+      
+      const { access_token } = data
+      // Use the useAuth hook to set the token and update state
+      login(access_token)
+      
+      toast.success("Logged in successfully!")
       router.push("/planner") // Redirect to the dashboard after successful login
     }
     catch (error: any) {
       setError(error.message)
+      toast.error("Login failed", {
+        description: error.message,
+      })
     }
     finally {
       setLoading(false)

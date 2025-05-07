@@ -3,7 +3,7 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import DragAndDropList from "@/components/habits"
-
+import { NavUser } from "@/components/nav-user"
 import { HabitForm } from "@/components/habit-form"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -11,7 +11,6 @@ import { PlusIcon, ListIcon } from "lucide-react"
 import { Toaster } from "@/components/ui/sonner"
 import { API_HOST_BASE_URL } from "@/lib/constants"
 import { useTheme } from "@/components/theme-provider"
-
 
 import {
   Sidebar,
