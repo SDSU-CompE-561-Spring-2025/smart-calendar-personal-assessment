@@ -135,26 +135,267 @@
 }
 
 .theme-green {
+  --primary: oklch(0.5 0.2 145);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.7 0.2 145);
+  --accent: oklch(0.5 0.2 145);
+  --accent-foreground: oklch(0.985 0 0);
   --color-primary: hsl(123, 39%, 35%);
   --color-secondary: hsl(123,39%,50%);
+  --accentcolor: hsl(123, 39%, 35%);
 }
 
 .theme-orange {
+  --primary: oklch(0.6 0.2 60);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.7 0.2 60);
+  --accent: oklch(0.6 0.2 60);
+  --accent-foreground: oklch(0.985 0 0);
   --color-primary: hsl(25, 100%, 55%);
-  --color-secondary: hsl(25,100%,65%); 
+  --color-secondary: hsl(25,100%,65%);
+  --accentcolor: hsl(25, 100%, 55%);
 }
 
 .theme-purple {
+  --primary: oklch(0.5 0.2 300);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.7 0.2 300);
+  --accent: oklch(0.5 0.2 300);
+  --accent-foreground: oklch(0.985 0 0);
   --color-primary: hsl(270, 100%, 65%);
   --color-secondary: hsl(270,100%,75%);
+  --accentcolor: hsl(270, 100%, 65%);
 }
 
 .theme-pink {
+  --primary: oklch(0.5 0.2 350);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.7 0.2 350);
+  --accent: oklch(0.5 0.2 350);
+  --accent-foreground: oklch(0.985 0 0);
   --color-primary: hsl(334, 63%, 50%);;
   --color-secondary: hsl(334,63%,75%);
+  --accentcolor: hsl(334, 63%, 50%);
 }
 
 .theme-red {
+  --primary: oklch(0.5 0.2 25);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.7 0.2 25);
+  --accent: oklch(0.5 0.2 25);
+  --accent-foreground: oklch(0.985 0 0);
   --color-primary: hsl(0, 77%, 58%);
   --color-secondary: hsl(0, 55%, 58%);
+  --accentcolor: hsl(0, 77%, 58%);
+}
+
+/* Homepage styles */
+.homepage-container .header {
+  background-color: #20b2aa;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+.homepage-calendar {
+  width: 100% !important;
+  border: none !important;
+  font-size: 1rem !important;
+}
+
+.feature-box {
+  background-color: var(--card); 
+  color: var(--card-foreground);
+  transition: box-shadow 0.2s;
+}
+
+.feature-box:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.habit-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.1rem;
+  color: var(--foreground);
+}
+
+.habits-placeholder {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--muted-foreground);
+  font-size: 1.1rem;
+}
+
+/* Fix react-calendar styling */
+.react-calendar {
+  border: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: transparent !important;
+  font-family: inherit !important;
+  line-height: 1.5 !important;
+  color: var(--foreground) !important;
+}
+
+.react-calendar__tile {
+  padding: 1em 0.75em !important;
+  text-align: center !important;
+  aspect-ratio: 1 / 1 !important;
+  color: var(--foreground) !important;
+}
+
+.react-calendar__month-view__weekdays {
+  font-size: 1em !important;
+  font-weight: bold !important;
+  color: var(--foreground) !important;
+}
+
+.react-calendar__navigation {
+  height: 48px !important;
+  margin-bottom: 0.5em !important;
+  color: var(--foreground) !important;
+}
+
+.react-calendar__navigation button {
+  font-size: 1.1em !important;
+  color: var(--foreground) !important;
+}
+
+.react-calendar__tile--active {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+.react-calendar__tile--now {
+  background-color: var(--accent) !important;
+  opacity: 0.2 !important;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus,
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: var(--accent) !important;
+  opacity: 0.1 !important;
+}
+
+/* Responsive calendar sizes */
+@media screen and (min-width: 1024px) {
+  .homepage-calendar {
+    font-size: 1.1rem !important;
+  }
+  
+  .react-calendar__tile {
+    padding: 1.2em 0.75em !important;
+  }
+  
+  .react-calendar__navigation {
+    height: 60px !important;
+  }
+  
+  .habit-item, 
+  .habits-placeholder {
+    font-size: 1.25rem;
+  }
+}
+
+/* Styles for react-big-calendar */
+.rbc-calendar {
+  color: var(--foreground) !important;
+  background-color: var(--background) !important;
+}
+
+.rbc-toolbar {
+  color: var(--foreground) !important;
+}
+
+.rbc-toolbar button {
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+  background-color: var(--card) !important;
+}
+
+.rbc-toolbar button:hover {
+  background-color: var(--accent) !important;
+  opacity: 0.2 !important;
+}
+
+.rbc-toolbar button:active,
+.rbc-toolbar button.rbc-active {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+.rbc-header {
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+  background-color: var(--card) !important;
+}
+
+.rbc-month-view,
+.rbc-time-view,
+.rbc-agenda-view {
+  border-color: var(--border) !important;
+  background-color: var(--background) !important;
+}
+
+.rbc-day-bg {
+  background-color: var(--background) !important;
+}
+
+.rbc-off-range-bg {
+  background-color: var(--muted) !important;
+}
+
+.rbc-today {
+  background-color: var(--accent) !important;
+  opacity: 0.2 !important;
+}
+
+.rbc-event {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+  border-color: var(--primary) !important;
+}
+
+.rbc-event.rbc-selected {
+  background-color: var(--accent) !important;
+}
+
+.rbc-slot-selection {
+  background-color: var(--primary) !important;
+  opacity: 0.7 !important;
+}
+
+.rbc-time-header,
+.rbc-time-header-content,
+.rbc-time-view,
+.rbc-time-content {
+  border-color: var(--border) !important;
+}
+
+.rbc-timeslot-group {
+  border-color: var(--border) !important;
+}
+
+.rbc-time-slot {
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+}
+
+.rbc-current-time-indicator {
+  background-color: var(--accent) !important;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  border-color: var(--border) !important;
+}
+
+.rbc-time-view-resources .rbc-time-gutter,
+.rbc-time-view-resources .rbc-time-header-gutter {
+  background-color: var(--background) !important;
 }

@@ -1,14 +1,26 @@
 "use client"
 
-import { useTheme } from "next-themes"
+import { useTheme } from "@/components/theme-provider"
 import { Toaster as Sonner, ToasterProps } from "sonner"
+import { useEffect, useState } from "react"
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  
+  // Safely determine theme value
+  const themeValue = mounted ? (theme === "system" 
+    ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") 
+    : theme) 
+    : "light" // Default before hydration
 
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      theme={themeValue as ToasterProps["theme"]}
       className="toaster group"
       style={
         {

@@ -9,13 +9,22 @@ settings = get_settings()
 
 
 def create_habit(db: Session, habit: HabitCreate, user_id: int):
+    # Clean up quantity and duration to ensure only one is set
+    quantity = None
+    duration = None
+    
+    if habit.quantity and habit.quantity > 0:
+        quantity = habit.quantity
+    elif habit.duration and habit.duration > 0:
+        duration = habit.duration
+    
     db_habit = Habit(
         user_id=user_id,
         name=habit.name,
-        quantity=habit.quantity,
-        duration=habit.duration,
+        quantity=quantity,
+        duration=duration,
         days_of_week=",".join(habit.days_of_week) if habit.days_of_week else None,
-        start_date=habit.start_date,
+        start_date=habit.start_date or date.today(),  # Default to today if not provided
         end_date=habit.end_date,
         category_id=habit.category_id
     )

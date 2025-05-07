@@ -4,7 +4,7 @@ from fastapi          import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm   import Session
 
-from backend.core.auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
+from backend.core.auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, decode_access_token, oauth_scheme
 from backend.core.dependencies import get_db
 import backend.services.user as user_service
 from backend.schemas.token import Token
@@ -19,6 +19,14 @@ def create_user(*, db: Session = Depends(get_db), user: UserBase):
     if newUser is None:
         raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST, detail = "Invalid Email")
     return newUser  
+
+@router.get("/me", response_model=UserResponse)
+def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth_scheme)):
+    token_data = decode_access_token(token)
+    user = user_service.get_user_by_email(db=db, email=token_data.email)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    return user
 
 @router.get("/get_self", response_model=UserResponse)
 def get_self_user(db: Session = Depends(get_db), email: str = None):
