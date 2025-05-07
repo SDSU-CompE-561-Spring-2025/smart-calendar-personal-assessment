@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { XIcon } from "lucide-react"
 import ThemeToggle from "@/ui/theme-mode"
-import { useDarkMode } from "@rbnd/react-dark-mode"
+// import { useDarkMode } from "@rbnd/react-dark-mode"
 import { useEffect, useState } from "react"
 
 // Available color themes from the ThemeToggle component

@@ -3,6 +3,8 @@
 import * as React from "react"
 import { NavUser } from "./nav-user"
 import { useRouter } from "next/navigation"
+import { useState }  from "react" 
+import { API_HOST_BASE_URL } from "@/lib/constants" 
 
 import {
   Sidebar,
@@ -18,10 +20,10 @@ import {
 } from "@/components/ui/sidebar"
 
 const data = {
-  user: {
+  user: { // get user stuff from backend
     name: "User",
     email: "email@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "/potthing.jpg", // figure this out later
   },
   navMain: [
     { title: "Account", url: "/account" },
@@ -30,9 +32,17 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: 
+  React.ComponentProps<typeof Sidebar>) {
   const router = useRouter()
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  
 
+  
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     router.push("/signin");

@@ -52,7 +52,7 @@ export function SignUpForm({
       }
 
       // Redirect to dashboard or verification page after successful signup
-      router.push("/planner")
+      router.push("/signin")
     }
     catch (err: any) {
       setError(err.message)
@@ -134,7 +134,7 @@ export function SignUpForm({
               />
             </div>
             <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)">
-              {loading ? "Signing Up..." : "Sign Up"}
+              {loading ? "Passwords Don't Match Or Invalid Signup" : "Sign Up"}
             </Button>
           </div>
         </div>
