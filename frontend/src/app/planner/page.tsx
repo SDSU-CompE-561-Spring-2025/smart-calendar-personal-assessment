@@ -152,6 +152,7 @@ export default function CalendarPage() {
         <SidebarProvider>
           <SidebarInset>
             <header className="flex shrink-0 items-center gap-2">
+              
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="ghost" className='text-[30px] text-(--accentcolor2)'>+</Button>
