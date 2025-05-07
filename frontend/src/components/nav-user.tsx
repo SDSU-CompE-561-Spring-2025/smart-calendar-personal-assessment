@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/hooks/useAuth"
 
 import {
   BadgeCheck,
@@ -43,12 +44,18 @@ interface JWTPayload {
 }
 
 export function NavUser({ user }: { user: DisplayUser }) {
+  const router = useRouter()
+  const { logout } = useAuth()
   const { isMobile } = useSidebar()
   const [mounted, setMounted] = useState(false)
   
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const handleLogout = () => {
+    logout()
+  }
 
   if (!mounted) {
     return null
@@ -118,13 +125,13 @@ export function NavUser({ user }: { user: DisplayUser }) {
               </a>
             </DropdownMenuGroup>
             <DropdownMenuSeparator className="bg-border" />
-            <a href="/signin">
-              <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground">
-                <LogOut className="mr-2 h-4 w-4"/>
-
-                Log out
-              </DropdownMenuItem>
-            </a>
+            <DropdownMenuItem 
+              onClick={handleLogout}
+              className="text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
+            >
+              <LogOut className="mr-2 h-4 w-4"/>
+              Log out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
