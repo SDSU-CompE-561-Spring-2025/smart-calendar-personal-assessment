@@ -146,6 +146,7 @@ export function AccountForm({
                 <AvatarImage src="/images/defaultusericon.png" alt="User Avatar" />
                 <AvatarFallback>{userData.first_name ? userData.first_name[0] : 'U'}</AvatarFallback>
               </Avatar>
+
             </div>
 
             {loading ? (

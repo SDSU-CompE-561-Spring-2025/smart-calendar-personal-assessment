@@ -5,10 +5,12 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm   import Session
 
 from backend.core.auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, decode_access_token, oauth_scheme
+
 from backend.core.dependencies import get_db
 import backend.services.user as user_service
 from backend.schemas.token import Token
 from backend.schemas.user import UserBase, UserResponse, DeleteUserPayload
+from backend.models.user import User as models
 
 router = APIRouter()
 

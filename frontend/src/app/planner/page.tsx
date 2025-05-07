@@ -480,6 +480,7 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-background">
       <Headerinstance />
+
       <div className="calendar-container p-[20px] pb-[0px] text-foreground">
         <div className="mb-4 flex flex-col space-y-2">
           <div className="flex justify-between">
@@ -539,6 +540,7 @@ export default function CalendarPage() {
         <SidebarProvider defaultOpen={true}>
           <SidebarInset className="bg-background border-border">
             <header className="flex shrink-0 items-center gap-2 bg-background text-foreground">
+
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="ghost" className="text-[30px] text-primary">+</Button>
