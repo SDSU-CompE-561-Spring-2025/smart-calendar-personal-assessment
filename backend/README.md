@@ -1,10 +1,5 @@
-- Smart Calendar Personal Assessment 
-Our smart calendar web application will serve to promote users to develop an organized lifestyle that revolves around self improvement.
-While it primarily serves as a calendar, users can customize their experience and utilize several features on our application such as weekly progress reports and habit trackers.
-With our application, users can easily organize their schedules, goals, habits, and lives.
-
-How to setup Swagger:
-1) change directory into /smart-calendar-personal-assessment/backend
-2) run "uv add fastapi" to get a venv folder in the project
-3) run "hatch run dev" to start the program on your local host
-4) open "http://127.0.0.1:8000/docs#/" on your browser
+How to setup Backend:
+1) Download Docker
+2) change directory into /smart-calendar-personal-assessment/backend
+3) run "docker compose up --build"
+4) run the container in docker
