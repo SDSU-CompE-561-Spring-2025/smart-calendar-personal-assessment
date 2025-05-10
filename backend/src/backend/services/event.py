@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session, joinedload
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from backend.core.config import get_settings
 from backend.models.event import Event
 from backend.schemas.event import EventCreate, EventResponse

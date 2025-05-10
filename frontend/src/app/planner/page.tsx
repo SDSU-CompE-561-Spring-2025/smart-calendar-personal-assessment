@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { useState, useEffect, useCallback } from 'react';
 import { Calendar, momentLocalizer, View, NavigateAction } from 'react-big-calendar';
 import moment from 'moment';
@@ -14,7 +15,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,12 +25,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-import { API_HOST_BASE_URL } from "@/lib/constants" 
-
+import { API_HOST_BASE_URL } from "@/lib/constants";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -41,11 +38,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
-// Map day strings to numeric values
 const dayMap: Record<string, number> = {
   sunday: 0,
   monday: 1,
@@ -56,7 +51,6 @@ const dayMap: Record<string, number> = {
   saturday: 6
 };
 
-// Initialize localizer
 const initializeLocalizer = () => {
   const savedStartDay = typeof window !== 'undefined' ?
     localStorage.getItem("calendar-start-day") || "sunday" : "sunday";
@@ -67,110 +61,21 @@ const initializeLocalizer = () => {
 
 const localizer = initializeLocalizer();
 
-// Utility functions for handling dates consistently
-const formatDateForBackend = (date: Date): string => {
-  // Send dates to backend in UTC format
-  console.log('Sending to backend:', date.toISOString(), '(Local date was:', date.toString(), ')');
-  return date.toISOString();
-};
-
-const parseBackendDate = (dateString: string): Date => {
-  // The backend is storing dates in UTC, but we need to display them in local time
-  // When the Date constructor parses an ISO string, it automatically converts to local time
-  // which is causing the display issue in Pacific Time
-  const date = new Date(dateString);
-  console.log('Got from backend:', dateString, 'Parsed as local:', date.toString());
-  return date;
-};
-
-// Format dates for display in local timezone
-const formatDateForDisplay = (date: Date): string => {
-  return moment(date).format('MMMM D, YYYY h:mm A');
-};
-
-// Utility to convert date inputs to proper Date objects ensuring proper time preservation
-const createDateFromInput = (dateValue: string): Date => {
-  // When user selects a datetime-local input, the browser gives us a string in local time
-  // We need to create a Date object that preserves the local time as selected
-  // Standard Date constructor can have timezone issues
-  const [datePart, timePart] = dateValue.split('T');
-  const [year, month, day] = datePart.split('-').map(Number);
-  const [hours, minutes] = timePart.split(':').map(Number);
-  
-  // Create date using local components (month is 0-indexed in JavaScript)
-  const localDate = new Date(year, month - 1, day, hours, minutes, 0);
-  
-  console.log('Input date string:', dateValue);
-  console.log('Parsed as local components:', {year, month, day, hours, minutes});
-  console.log('Created date:', localDate.toString());
-  
-  return localDate;
-};
-
-// For showing the date in the input field, we need the local date
 const formatDateForInput = (date: Date): string => {
   return moment(date).format('YYYY-MM-DDTHH:mm');
 };
 
-// A special function to explicitly fix the timezone issue when displaying events
-// This ensures events show on the correct day and time regardless of timezone
-const fixEventDates = (events: any[]) => {
-  return events.map(event => {
-    // Create a new object with all properties
-    const fixedEvent = { ...event };
-    
-    // Pacific Time is UTC-7 or UTC-8 depending on daylight saving
-    // If events are showing 7 hours ahead on the next day (9:27 PM showing as 4:27 AM next day)
-    // We need to adjust back by explicitly setting the time components
-    
-    if (fixedEvent.start instanceof Date) {
-      console.log('Original start date:', fixedEvent.start.toString());
-      
-      // Create a new date with the local time components to fix the display
-      // This explicitly preserves the local time without timezone shifting
-      const year = fixedEvent.start.getFullYear();
-      const month = fixedEvent.start.getMonth();
-      const day = fixedEvent.start.getDate();
-      const hours = fixedEvent.start.getHours();
-      const minutes = fixedEvent.start.getMinutes();
-      const seconds = fixedEvent.start.getSeconds();
-      
-      // Create a date explicitly with these components
-      fixedEvent.start = new Date(year, month, day, hours, minutes, seconds);
-      console.log('Fixed start date:', fixedEvent.start.toString());
-    }
-    
-    if (fixedEvent.end instanceof Date) {
-      console.log('Original end date:', fixedEvent.end.toString());
-      
-      // Same fix for end date
-      const year = fixedEvent.end.getFullYear();
-      const month = fixedEvent.end.getMonth();
-      const day = fixedEvent.end.getDate();
-      const hours = fixedEvent.end.getHours();
-      const minutes = fixedEvent.end.getMinutes();
-      const seconds = fixedEvent.end.getSeconds();
-      
-      // Create a date explicitly with these components
-      fixedEvent.end = new Date(year, month, day, hours, minutes, seconds);
-      console.log('Fixed end date:', fixedEvent.end.toString());
-    }
-    
-    return fixedEvent;
-  });
+const createDateFromInput = (dateValue: string): Date => {
+  return new Date(dateValue);
 };
 
-// Function to handle token expiration
+const formatDateForDisplay = (date: Date): string => {
+  return moment(date).format('MMMM D, YYYY h:mm A');
+};
+
 const handleTokenExpiration = (router: any) => {
-  console.log("Token expired, redirecting to login");
-  
-  // Clear the expired token
   localStorage.removeItem("access_token");
-  
-  // Show a notification
   toast.error("Your session has expired. Please sign in again.");
-  
-  // Redirect to login page
   router.push('/signin');
 };
 
@@ -179,136 +84,71 @@ export default function CalendarPage() {
   const { isLoggedIn, loading } = useAuth();
   const { theme, colorTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [events, setEvents] = useState<Array<{id: number, title: string, start: Date, end: Date}>>([]);
+  const [events, setEvents] = useState<Array<{ id: number, title: string, start: Date, end: Date }>>([]);
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>('month');
-  const [selectedEvent, setSelectedEvent] = useState<{id: number, title: string, start: Date, end: Date} | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<{ id: number, title: string, start: Date, end: Date } | null>(null);
   const [showEventDetail, setShowEventDetail] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [newEvent, setNewEvent] = useState({ title: '', start: new Date(), end: new Date() });
 
-  // Handle mounting to avoid hydration issues and ensure proper theme
   useEffect(() => {
     setMounted(true);
-    
-    // Ensure correct theme classes
     const root = document.documentElement;
-    
-    // This will reapply classes if needed
     if (theme && theme !== 'system') {
       root.classList.remove('light', 'dark');
       root.classList.add(theme);
     }
-    
     if (colorTheme && colorTheme !== 'default') {
-      // Remove any existing theme classes
-      root.classList.forEach(className => {
-        if (className.startsWith('theme-')) {
-          root.classList.remove(className);
-        }
-      });
-      
-      // Add the current color theme
+      root.classList.forEach(c => c.startsWith('theme-') && root.classList.remove(c));
       root.classList.add(colorTheme);
     }
   }, [theme, colorTheme]);
 
-  // Redirect if not authenticated
   useEffect(() => {
-    if (!loading && !isLoggedIn) {
-      router.push('/signin');
-    }
+    if (!loading && !isLoggedIn) router.push('/signin');
   }, [isLoggedIn, loading, router]);
 
   useEffect(() => {
-    // Only fetch events if user is logged in and component is mounted
     if (!isLoggedIn || !mounted) return;
-    
     const fetchEvents = async () => {
-      const token = localStorage.getItem("access_token")
-      if (!token) {
-        return;
-      }
-  
+      const token = localStorage.getItem("access_token");
+      if (!token) return;
       try {
         const res = await fetch(`${API_HOST_BASE_URL}/event`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
-  
         if (!res.ok) {
-          // Check if the token has expired
-          if (res.status === 401) {
-            handleTokenExpiration(router);
-            return;
-          }
-          
+          if (res.status === 401) return handleTokenExpiration(router);
           const err = await res.json();
           throw new Error(err.detail || "Unauthorized");
         }
-  
         const data = await res.json();
-        console.log('Raw events data from backend:', data);
-        
-        const formattedEvents = data.map((event: any) => {
-          console.log(`Event ${event.id}: ${event.name}`, 'Start:', event.start_time, 'End:', event.end_time);
-          
-          // Parse UTC ISO string to local date 
-          const startDate = parseBackendDate(event.start_time);
-          const endDate = parseBackendDate(event.end_time);
-          
-          return {
-            id: event.id,
-            title: event.name,
-            start: startDate,
-            end: endDate,
-          };
-        });
-  
-        // Apply the timezone fix to ensure correct display
-        const fixedEvents = fixEventDates(formattedEvents);
-        setEvents(fixedEvents);
+        const formattedEvents = data.map((event: any) => ({
+          id: event.id,
+          title: event.name,
+          start: new Date(event.start_time),
+          end: new Date(event.end_time),
+        }));
+        setEvents(formattedEvents);
       } catch (error) {
         console.error("Error loading events:", error);
       }
     };
-  
     fetchEvents();
   }, [isLoggedIn, mounted, router]);
 
-  const [newEvent, setNewEvent] = useState({
-    title: '',
-    start: new Date(),
-    end: new Date()
-  });
-
   const handleAddEvent = async () => {
     if (!newEvent.title || !isLoggedIn) return;
-
     try {
       const token = localStorage.getItem('access_token');
-      if (!token) {
-        router.push('/signin');
-        return;
-      }
-      
-      console.log('Creating event with dates:', {
-        start: newEvent.start.toString(),
-        startISO: newEvent.start.toISOString(),
-        end: newEvent.end.toString(),
-        endISO: newEvent.end.toISOString(),
-        timezoneOffset: newEvent.start.getTimezoneOffset()
-      });
-      
-      // Form the event payload
+      if (!token) return router.push('/signin');
+      const timezoneOffsetMs = newEvent.start.getTimezoneOffset() * 60 * 1000;
       const eventPayload = {
         name: newEvent.title,
-        start_time: formatDateForBackend(newEvent.start),
-        end_time: formatDateForBackend(newEvent.end),
+        start_time: new Date(newEvent.start.getTime() - timezoneOffsetMs).toISOString(),
+        end_time: new Date(newEvent.end.getTime() - timezoneOffsetMs).toISOString(),
       };
-      
-      console.log('Event payload:', eventPayload);
-      
       const response = await fetch(`${API_HOST_BASE_URL}/event`, {
         method: 'POST',
         headers: {
@@ -317,43 +157,19 @@ export default function CalendarPage() {
         },
         body: JSON.stringify(eventPayload),
       });
-
       if (!response.ok) {
-        // Check if the token has expired
-        if (response.status === 401) {
-          handleTokenExpiration(router);
-          return;
-        }
-        
+        if (response.status === 401) return handleTokenExpiration(router);
         const errorData = await response.json();
         throw new Error(errorData.detail || 'Failed to create event');
       }
-
       const savedEvent = await response.json();
-      console.log('Saved event from backend:', savedEvent);
-
-      // Parse the saved event dates
-      const startDate = parseBackendDate(savedEvent.start_time);
-      const endDate = parseBackendDate(savedEvent.end_time);
-      
-      // Create the new event and fix timezone issues
-      const newEventObj = {
+      setEvents([...events, {
         id: savedEvent.id,
         title: savedEvent.name,
-        start: startDate,
-        end: endDate,
-      };
-      
-      // Add the new event to the list with timezone fix applied
-      const fixedNewEvent = fixEventDates([newEventObj])[0];
-      setEvents([...events, fixedNewEvent]);
-
-      setNewEvent({
-        title: '',
-        start: new Date(),
-        end: new Date()
-      });
-
+        start: new Date(savedEvent.start_time),
+        end: new Date(savedEvent.end_time),
+      }]);
+      setNewEvent({ title: '', start: new Date(), end: new Date() });
     } catch (error) {
       console.error('Create event error:', error);
       toast.error("Failed to create event. Please try again.");
@@ -367,94 +183,41 @@ export default function CalendarPage() {
 
   const handleDeleteEvent = async () => {
     if (!selectedEvent || !isLoggedIn) return;
-
     try {
       const token = localStorage.getItem('access_token');
-      if (!token) {
-        router.push('/signin');
-        return;
-      }
-      
+      if (!token) return router.push('/signin');
       const response = await fetch(`${API_HOST_BASE_URL}/event/${selectedEvent.id}`, {
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
+        headers: { Authorization: `Bearer ${token}` }
       });
-
       if (!response.ok) {
-        // Check if the token has expired
-        if (response.status === 401) {
-          handleTokenExpiration(router);
-          return;
-        }
-        
+        if (response.status === 401) return handleTokenExpiration(router);
         const errorData = await response.json();
         throw new Error(errorData.detail || 'Failed to delete event');
       }
-
-      // Remove the deleted event from the state
-      setEvents(events.filter(event => event.id !== selectedEvent.id));
-      
-      // Close the dialogs
+      setEvents(events.filter(e => e.id !== selectedEvent.id));
       setShowDeleteConfirm(false);
       setShowEventDetail(false);
       setSelectedEvent(null);
-      
       toast.success("Event deleted successfully");
-
     } catch (error) {
       console.error('Delete event error:', error);
       toast.error("Failed to delete event. Please try again.");
     }
   };
 
-  // Navigation handlers
   const handleNavigate = useCallback((action: NavigateAction, newDate?: Date) => {
     switch (action) {
-      case 'PREV':
-        setDate(prevDate => {
-          const newDate = new Date(prevDate);
-          if (view === 'month') {
-            newDate.setMonth(prevDate.getMonth() - 1);
-          } else if (view === 'week') {
-            newDate.setDate(prevDate.getDate() - 7);
-          } else if (view === 'day') {
-            newDate.setDate(prevDate.getDate() - 1);
-          }
-          return newDate;
-        });
-        break;
-      case 'NEXT':
-        setDate(prevDate => {
-          const newDate = new Date(prevDate);
-          if (view === 'month') {
-            newDate.setMonth(prevDate.getMonth() + 1);
-          } else if (view === 'week') {
-            newDate.setDate(prevDate.getDate() + 7);
-          } else if (view === 'day') {
-            newDate.setDate(prevDate.getDate() + 1);
-          }
-          return newDate;
-        });
-        break;
-      case 'TODAY':
-        setDate(new Date());
-        break;
-      default:
-        if (newDate) {
-          setDate(newDate);
-        }
+      case 'PREV': setDate(prev => new Date(prev.setMonth(prev.getMonth() - 1))); break;
+      case 'NEXT': setDate(prev => new Date(prev.setMonth(prev.getMonth() + 1))); break;
+      case 'TODAY': setDate(new Date()); break;
+      default: if (newDate) setDate(newDate);
     }
-  }, [view]);
-
-  // View change handler
-  const handleViewChange = useCallback((newView: View) => {
-    setView(newView);
   }, []);
 
-  // Show loading state while checking authentication
-  if (loading || !mounted) {
+  const handleViewChange = useCallback((newView: View) => setView(newView), []);
+
+ if (loading || !mounted) {
     return (
       <div className="min-h-screen bg-background">
         <Headerinstance />
@@ -718,6 +481,6 @@ export default function CalendarPage() {
         {/* Toast notifications */}
         <Toaster />
       </div>
-    </div>
-  );
+    </div>  
+    );
 }
