@@ -60,7 +60,7 @@ export function SettingsForm({
       case 'theme-red':
         return 'bg-red-600 hover:bg-red-700 text-white';
       default:
-        return theme === 'dark' ? 'bg-gray-800 hover:bg-gray-900 text-white' : 'bg-black hover:bg-gray-800 text-white';
+        return theme === 'dark' ? 'bg-gray-600 hover:bg-gray-700 text-white' : 'bg-black hover:bg-gray-700 text-white';
     }
   }
 
