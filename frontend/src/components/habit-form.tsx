@@ -125,6 +125,24 @@ export function HabitForm({ onSuccess }: HabitFormProps) {
   const [newCategoryColor, setNewCategoryColor] = useState('green');
   const [creatingCategory, setCreatingCategory] = useState(false);
 
+  // Get appropriate button styles based on current theme
+  const getButtonStyleClass = () => {
+    switch(colorTheme) {
+      case 'theme-green':
+        return 'bg-green-600 hover:bg-green-700 text-white';
+      case 'theme-orange':
+        return 'bg-orange-600 hover:bg-orange-700 text-white';
+      case 'theme-purple':
+        return 'bg-purple-600 hover:bg-purple-700 text-white';
+      case 'theme-pink':
+        return 'bg-pink-600 hover:bg-pink-700 text-white';
+      case 'theme-red':
+        return 'bg-red-600 hover:bg-red-700 text-white';
+      default:
+        return theme === 'dark' ? 'bg-gray-800 hover:bg-gray-900 text-white' : 'bg-black hover:bg-gray-800 text-white';
+    }
+  }
+
   // Fetch categories on component mount
   useEffect(() => {
     setMounted(true);
@@ -441,7 +459,7 @@ export function HabitForm({ onSuccess }: HabitFormProps) {
                   <Button 
                     onClick={createCategory} 
                     disabled={creatingCategory || !newCategoryName.trim()}
-                    className="bg-primary text-primary-foreground"
+                    className={getButtonStyleClass()}
                   >
                     {creatingCategory ? 'Creating...' : 'Create Category'}
                   </Button>
@@ -490,7 +508,7 @@ export function HabitForm({ onSuccess }: HabitFormProps) {
 
         <Button 
           type="submit" 
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+          className={`w-full ${getButtonStyleClass()}`}
           disabled={loading || categories.length === 0}
         >
           {loading ? 'Creating...' : 'Create Habit'}
@@ -498,4 +516,4 @@ export function HabitForm({ onSuccess }: HabitFormProps) {
       </form>
     </div>
   );
-} 
+}

@@ -46,6 +46,24 @@ export function SettingsForm({
     setCalendarStartDay(day)
   }
 
+  // Get appropriate button styles based on current theme
+  const getButtonStyleClass = () => {
+    switch(colorTheme) {
+      case 'theme-green':
+        return 'bg-green-600 hover:bg-green-700 text-white';
+      case 'theme-orange':
+        return 'bg-orange-600 hover:bg-orange-700 text-white';
+      case 'theme-purple':
+        return 'bg-purple-600 hover:bg-purple-700 text-white';
+      case 'theme-pink':
+        return 'bg-pink-600 hover:bg-pink-700 text-white';
+      case 'theme-red':
+        return 'bg-red-600 hover:bg-red-700 text-white';
+      default:
+        return theme === 'dark' ? 'bg-gray-800 hover:bg-gray-900 text-white' : 'bg-black hover:bg-gray-800 text-white';
+    }
+  }
+
   // If not mounted, show a loading state
   if (!mounted) {
     return (
@@ -127,7 +145,10 @@ export function SettingsForm({
                 </Select>
               </div>
 
-              <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-(--txtcolor)">
+              <Button 
+                type="submit" 
+                className={`w-full ${getButtonStyleClass()}`}
+              >
                 Save Settings
               </Button>
             </div>
