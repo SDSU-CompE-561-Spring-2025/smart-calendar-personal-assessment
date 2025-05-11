@@ -41,14 +41,19 @@ export function useAuth() {
   };
 
   const logout = () => {
+    // Clear all authentication and user preference data from localStorage
     localStorage.removeItem('access_token');
+    localStorage.removeItem('theme');
+    localStorage.removeItem('color-theme');
+    localStorage.removeItem('calendar-start-day');
+    
     setIsLoggedIn(false);
     
     // Dispatch a custom event to notify other components
     window.dispatchEvent(new Event('auth-change'));
     
-    // Redirect to signin page
-    router.push('/signin');
+    // Force a full page reload to reset all theme settings
+    window.location.href = '/signin';
   };
 
   return { isLoggedIn, loading, login, logout };

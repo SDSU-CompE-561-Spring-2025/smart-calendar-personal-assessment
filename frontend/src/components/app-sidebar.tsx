@@ -96,8 +96,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 
   const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    router.push("/signin");
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('theme');
+    localStorage.removeItem('color-theme');
+    localStorage.removeItem('calendar-start-day');
+          
+    // Force a full page reload to reset theme settings
+    window.location.href = '/signin';
   }
 
   const handleHabitCreated = () => {
