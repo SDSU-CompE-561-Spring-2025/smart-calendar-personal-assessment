@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/useAuth"
 import { AlertCircle, InfoIcon } from "lucide-react"
 
 import { useState }  from "react" 
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation" 
 
 export function SignUpForm({
   className,
