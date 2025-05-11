@@ -206,16 +206,50 @@ export default function CalendarPage() {
     }
   };
 
-  const handleNavigate = useCallback((action: NavigateAction, newDate?: Date) => {
+   const handleNavigate = useCallback((action: NavigateAction, newDate?: Date) => {
     switch (action) {
-      case 'PREV': setDate(prev => new Date(prev.setMonth(prev.getMonth() - 1))); break;
-      case 'NEXT': setDate(prev => new Date(prev.setMonth(prev.getMonth() + 1))); break;
-      case 'TODAY': setDate(new Date()); break;
-      default: if (newDate) setDate(newDate);
+      case 'PREV': 
+        if (view === 'month') {
+          setDate(prev => new Date(prev.setMonth(prev.getMonth() - 1)));
+        } else if (view === 'week') {
+          setDate(prev => new Date(prev.setDate(prev.getDate() - 7)));
+        } else if (view === 'day') {
+          setDate(prev => new Date(prev.setDate(prev.getDate() - 1)));
+        }
+        break;
+      case 'NEXT': 
+        if (view === 'month') {
+          setDate(prev => new Date(prev.setMonth(prev.getMonth() + 1)));
+        } else if (view === 'week') {
+          setDate(prev => new Date(prev.setDate(prev.getDate() + 7)));
+        } else if (view === 'day') {
+          setDate(prev => new Date(prev.setDate(prev.getDate() + 1)));
+        }
+        break;
+      case 'TODAY': 
+        setDate(new Date()); 
+        break;
+      default: 
+        if (newDate) setDate(newDate);
     }
-  }, []);
+  }, [view]);
 
   const handleViewChange = useCallback((newView: View) => setView(newView), []);
+
+  const calendarHeader = (date: Date, view: View): string => {
+  switch (view) {
+    case 'month':
+      return moment(date).format('MMMM YYYY');
+    case 'week':
+      const startOfWeek = moment(date).startOf('week');
+      const endOfWeek = moment(date).endOf('week');
+      return `${startOfWeek.format('MMM D')} - ${endOfWeek.format('MMM D, YYYY')}`;
+    case 'day':
+      return moment(date).format('dddd, MMMM D, YYYY');
+    default:
+      return moment(date).format('MMMM YYYY');
+  }
+};
 
  if (loading || !mounted) {
     return (
@@ -271,6 +305,9 @@ export default function CalendarPage() {
                   >
                     Next
                   </Button>
+                </div>
+                <div>
+                    <h2>{calendarHeader(date, view)}</h2>
                 </div>
                 <div className="flex space-x-2">
                   <Button 
@@ -397,6 +434,7 @@ export default function CalendarPage() {
                   className="rbc-calendar-wrapper"
                   toolbar={false}
                   onSelectEvent={handleEventSelect}
+                  
                   onRangeChange={(range) => {
                     console.log('Calendar range changed:', range);
                   }}
@@ -416,6 +454,7 @@ export default function CalendarPage() {
                         border: 'none',
                       },
                     };
+                  
                   }}
                 />
               </section>
