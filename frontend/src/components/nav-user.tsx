@@ -71,9 +71,9 @@ export function NavUser({ user }: { user: DisplayUser }) {
               className="data-[state=open]:bg-accent data-[state=open]:text-accent-foreground bg-background text-foreground"
             >
 
-              <Avatar className="h-8 w-8 rounded-lg bg-background">
+              <Avatar className="h-8 w-8 rounded-lg bg-[var(--accentcolor)]">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+                <AvatarFallback className="rounded-lg bg-[var(--accentcolor)] text-white">
                   {user.name ? user.name[0] : 'U'}
                 </AvatarFallback>
 
@@ -93,9 +93,9 @@ export function NavUser({ user }: { user: DisplayUser }) {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className="h-8 w-8 rounded-lg bg-[var(--accentcolor)]">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+                  <AvatarFallback className="rounded-lg bg-[var(--accentcolor)] text-white">
                     {user.name ? user.name[0] : 'U'}
                   </AvatarFallback>
 

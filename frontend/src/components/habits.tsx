@@ -254,7 +254,7 @@ const DragAndDropList: React.FC = () => {
             const createButton = document.querySelector('[data-create-habit]') as HTMLButtonElement;
             if (createButton) createButton.click();
           }}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
+          className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)]"
         >
           <PlusIcon className="h-4 w-4 mr-2" />
           Create Your First Habit
@@ -352,7 +352,7 @@ const DragAndDropList: React.FC = () => {
                                 <AlertDialogCancel className="bg-background text-foreground border-border">Cancel</AlertDialogCancel>
                                 <AlertDialogAction 
                                   onClick={() => deleteHabit(habit.id)}
-                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                  className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)]"
                                   disabled={deletingHabit === habit.id}
                                 >
                                   {deletingHabit === habit.id ? 'Deleting...' : 'Delete'}

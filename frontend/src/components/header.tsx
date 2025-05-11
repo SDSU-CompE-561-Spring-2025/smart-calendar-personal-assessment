@@ -12,6 +12,7 @@ export function Headerinstance() {
     const [mounted, setMounted] = useState(false);
     const { isLoggedIn, logout } = useAuth();
     const router = useRouter();
+    const { theme } = useTheme();
     
     useEffect(() => {
         setMounted(true);
@@ -25,15 +26,16 @@ export function Headerinstance() {
     return (
         <header className="w-full border-b border-border py-2 px-4 flex justify-between items-center h-15 bg-background">
             <div className="items-center">
-                <Link href="/" className="text-primary text-2xl font-bold">
-                Calendar<span className="text-accent text-2xl font-bold">+</span>
+                <Link href="/" className="text-[var(--accentcolor)] text-2xl font-bold">
+                Calendar<span className="text-[var(--accentcolor2)] text-2xl font-bold">+</span>
                 </Link>
             </div>
             
             {mounted && isLoggedIn && (
                 <Button 
                     onClick={handleLogout}
-                    className="flex items-center gap-2 px-4 py-2 rounded border border-border bg-secondary text-secondary-foreground hover:bg-black transition-colors rounded-lg"
+                    className="flex items-center gap-2 px-4 py-2 rounded border border-border bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] transition-colors"
+
                     aria-label="Logout"
                 >
                     <LogOut className="h-4 w-4" />
