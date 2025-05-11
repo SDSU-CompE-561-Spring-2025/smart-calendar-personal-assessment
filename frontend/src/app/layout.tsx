@@ -28,31 +28,24 @@ export default function RootLayout({
             __html: `
               (function() {
                 // Get stored theme
-                const theme = localStorage.getItem('theme') || 'system';
-                const colorTheme = localStorage.getItem('color-theme') || 'default';
+                const theme = 'light';
+                const colorTheme = 'default';
                 
                 // Apply theme immediately
                 const root = document.documentElement;
                 
                 // Handle system preference
-                if (theme === 'system') {
-                  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                  root.classList.add(systemTheme);
-                } else {
-                  root.classList.add(theme);
-                }
+                root.classList.add(theme);
                 
                 // Apply color theme
-                if (colorTheme !== 'default') {
-                  root.classList.add(colorTheme);
-                }
+                root.classList.add(colorTheme);
               })();
             `,
           }}
         />
       </head>
       <body className={`${raleway.className} bg-background text-foreground`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {/* <Link 
             href="/login" 
             className="bg-teal-500 text-white px-4 py-1 text-sm rounded"

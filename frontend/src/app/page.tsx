@@ -159,23 +159,25 @@ export default function Homepage() {
     // Ensure correct theme classes
     const root = document.documentElement;
     
-    // This will reapply classes if needed
-    if (theme && theme !== 'system') {
-      root.classList.remove('light', 'dark');
-      root.classList.add(theme);
-    }
+    // // This will reapply classes if needed
+    // if (theme && theme !== 'system') {
+    //   root.classList.remove('light', 'dark');
+    //   root.classList.add(theme);
+    // }
     
-    if (colorTheme && colorTheme !== 'default') {
-      // Remove any existing theme classes
-      root.classList.forEach(className => {
-        if (className.startsWith('theme-')) {
-          root.classList.remove(className);
-        }
-      });
+    // if (colorTheme && colorTheme !== 'default') {
+    //   // Remove any existing theme classes
+    //   root.classList.forEach(className => {
+    //     if (className.startsWith('theme-')) {
+    //       root.classList.remove(className);
+    //     }
+    //   });
       
-      // Add the current color theme
-      root.classList.add(colorTheme);
-    }
+    //   // Add the current color theme
+    //   root.classList.add(colorTheme);
+    // }
+    root.classList.add('light');
+    root.classList.add('default');
   }, [theme, colorTheme]);
 
   useEffect(() => {
