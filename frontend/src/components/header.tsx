@@ -35,6 +35,7 @@ export function Headerinstance() {
                 <Button 
                     onClick={handleLogout}
                     className="flex items-center gap-2 px-4 py-2 rounded border border-border bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] transition-colors"
+
                     aria-label="Logout"
                 >
                     <LogOut className="h-4 w-4" />
