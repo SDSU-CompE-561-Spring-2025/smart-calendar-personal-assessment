@@ -217,6 +217,21 @@ export default function CalendarPage() {
 
   const handleViewChange = useCallback((newView: View) => setView(newView), []);
 
+  const calendarHeader = (date: Date, view: View): string => {
+  switch (view) {
+    case 'month':
+      return moment(date).format('MMMM YYYY');
+    case 'week':
+      const startOfWeek = moment(date).startOf('week');
+      const endOfWeek = moment(date).endOf('week');
+      return `${startOfWeek.format('MMM D')} - ${endOfWeek.format('MMM D, YYYY')}`;
+    case 'day':
+      return moment(date).format('dddd, MMMM D, YYYY');
+    default:
+      return moment(date).format('MMMM YYYY');
+  }
+};
+
  if (loading || !mounted) {
     return (
       <div className="min-h-screen bg-background">
@@ -271,6 +286,9 @@ export default function CalendarPage() {
                   >
                     Next
                   </Button>
+                </div>
+                <div>
+                    <h2>{calendarHeader(date, view)}</h2>
                 </div>
                 <div className="flex space-x-2">
                   <Button 
@@ -397,6 +415,7 @@ export default function CalendarPage() {
                   className="rbc-calendar-wrapper"
                   toolbar={false}
                   onSelectEvent={handleEventSelect}
+                  
                   onRangeChange={(range) => {
                     console.log('Calendar range changed:', range);
                   }}
@@ -416,6 +435,7 @@ export default function CalendarPage() {
                         border: 'none',
                       },
                     };
+                  
                   }}
                 />
               </section>
