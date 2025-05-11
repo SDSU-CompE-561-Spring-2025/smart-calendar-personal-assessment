@@ -9,7 +9,7 @@ from backend.core.auth import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, 
 from backend.core.dependencies import get_db
 import backend.services.user as user_service
 from backend.schemas.token import Token
-from backend.schemas.user import UserBase, UserResponse, DeleteUserPayload
+from backend.schemas.user import UserBase, UserResponse, DeleteUserPayload, UserUpdate
 from backend.models.user import User as models
 
 router = APIRouter()
@@ -68,3 +68,45 @@ def del_user(*, db: Session = Depends(get_db), user: DeleteUserPayload):
     if(deleted):
       return {"message": "Account Deleted"}
     raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Invalid Email/Password")
+
+@router.put("/update", response_model=UserResponse)
+def update_user(
+    user_update: UserUpdate,
+    db: Session = Depends(get_db), 
+    token: str = Depends(oauth_scheme)
+):
+    """
+    Update the current user's information
+    """
+    # Get current user from token
+    token_data = decode_access_token(token)
+    current_user = user_service.get_user_by_email(db=db, email=token_data.email)
+    
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="User not found"
+        )
+    
+    # Create update data dictionary
+    update_data = {
+        "first_name": user_update.first_name,
+        "last_name": user_update.last_name,
+        "email": user_update.email
+    }
+    
+    # Update user information
+    updated_user = user_service.update_user(
+        db=db, 
+        user_id=current_user.id, 
+        user_data=update_data,
+        new_password=user_update.password
+    )
+    
+    if not updated_user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="Failed to update user information. Email may already be in use."
+        )
+    
+    return updated_user

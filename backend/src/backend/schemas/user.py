@@ -37,3 +37,12 @@ class DeleteUserPayload(BaseModel):
     
     class Config:
         from_attributes = True
+
+class UserUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    email: str | None = None
+    password: str | None = None  # Optional new password
+    
+    class Config:
+        from_attributes = True

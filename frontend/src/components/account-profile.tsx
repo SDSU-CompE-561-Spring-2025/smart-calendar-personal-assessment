@@ -89,12 +89,6 @@ export function AccountForm({
         return;
       }
 
-      // For now, let's just display a success message
-      // In the future, you can implement an API endpoint to update user details
-      toast.success("Account details updated successfully");
-      
-      // TODO: Implement actual update when backend endpoint is available
-      /*
       const response = await fetch(`${API_HOST_BASE_URL}/user/update`, {
         method: 'PUT',
         headers: {
@@ -114,7 +108,6 @@ export function AccountForm({
       }
 
       toast.success("Account details updated successfully");
-      */
 
     } catch (error) {
       console.error("Error updating user data:", error);

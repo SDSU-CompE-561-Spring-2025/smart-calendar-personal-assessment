@@ -19,8 +19,15 @@ export function Headerinstance() {
     }, []);
     
     const handleLogout = () => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('theme');
+        localStorage.removeItem('color-theme');
+        localStorage.removeItem('calendar-start-day');
+        
         logout();
-        router.push('/signin');
+        
+        // Force a full page reload to reset theme settings
+        window.location.href = '/signin';
     };
     
     return (

@@ -74,9 +74,13 @@ const formatDateForDisplay = (date: Date): string => {
 };
 
 const handleTokenExpiration = (router: any) => {
-  localStorage.removeItem("access_token");
-  toast.error("Your session has expired. Please sign in again.");
-  router.push('/signin');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('theme');
+    localStorage.removeItem('color-theme');
+    localStorage.removeItem('calendar-start-day');
+          
+    toast.error("Your session has expired. Please sign in again.");
+    window.location.href = '/signin'; 
 };
 
 export default function CalendarPage() {

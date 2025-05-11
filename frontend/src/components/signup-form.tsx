@@ -1,16 +1,16 @@
 'use client'
 
-import { cn }                from "@/lib/utils"
+import { cn, validatePassword }                from "@/lib/utils"
 import { API_HOST_BASE_URL } from "@/lib/constants" 
 import { Button }            from "@/components/ui/button"
 import { Input }             from "@/components/ui/input"
 import { Label }             from "@/components/ui/label"
 import { toast } from "sonner"
 import { useAuth } from "@/hooks/useAuth"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, InfoIcon } from "lucide-react"
 
 import { useState }  from "react" 
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation" 
 
 export function SignUpForm({
   className,
@@ -63,6 +63,14 @@ export function SignUpForm({
     event.preventDefault()
     setLoading(true)
     setError(null)
+
+    // Validate password
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.isValid) {
+      setError(passwordValidation.message);
+      setLoading(false);
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match")
@@ -171,8 +179,12 @@ export function SignUpForm({
                 required
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className={error && error.includes("password") ? "border-red-400 focus-visible:ring-red-400" : ""}
+                className={error && (error.includes("password") || error.includes("Password")) ? "border-red-400 focus-visible:ring-red-400" : ""}
               />
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <InfoIcon className="h-3 w-3" />
+                <span>Password must have at least 8 characters, one uppercase letter, one number, and one special character.</span>
+              </div>
             </div>
             <div className="grid gap-3">
               <Label htmlFor="confirmPassword">Retype Password</Label>
