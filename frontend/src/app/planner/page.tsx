@@ -206,14 +206,33 @@ export default function CalendarPage() {
     }
   };
 
-  const handleNavigate = useCallback((action: NavigateAction, newDate?: Date) => {
+   const handleNavigate = useCallback((action: NavigateAction, newDate?: Date) => {
     switch (action) {
-      case 'PREV': setDate(prev => new Date(prev.setMonth(prev.getMonth() - 1))); break;
-      case 'NEXT': setDate(prev => new Date(prev.setMonth(prev.getMonth() + 1))); break;
-      case 'TODAY': setDate(new Date()); break;
-      default: if (newDate) setDate(newDate);
+      case 'PREV': 
+        if (view === 'month') {
+          setDate(prev => new Date(prev.setMonth(prev.getMonth() - 1)));
+        } else if (view === 'week') {
+          setDate(prev => new Date(prev.setDate(prev.getDate() - 7)));
+        } else if (view === 'day') {
+          setDate(prev => new Date(prev.setDate(prev.getDate() - 1)));
+        }
+        break;
+      case 'NEXT': 
+        if (view === 'month') {
+          setDate(prev => new Date(prev.setMonth(prev.getMonth() + 1)));
+        } else if (view === 'week') {
+          setDate(prev => new Date(prev.setDate(prev.getDate() + 7)));
+        } else if (view === 'day') {
+          setDate(prev => new Date(prev.setDate(prev.getDate() + 1)));
+        }
+        break;
+      case 'TODAY': 
+        setDate(new Date()); 
+        break;
+      default: 
+        if (newDate) setDate(newDate);
     }
-  }, []);
+  }, [view]);
 
   const handleViewChange = useCallback((newView: View) => setView(newView), []);
 
