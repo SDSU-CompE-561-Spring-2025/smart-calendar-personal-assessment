@@ -245,74 +245,68 @@ export default function CalendarPage() {
       <Headerinstance />
 
       <div className="calendar-container p-[20px] pb-[0px] text-foreground">
-        <div className="mb-4 flex flex-col space-y-2">
-          <div className="flex justify-between">
-            <div className="flex space-x-2">
-              <Button 
-                variant="outline" 
-                onClick={() => handleNavigate('TODAY')}
-                className="text-foreground border-border hover:bg-accent/10"
-              >
-                Today
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleNavigate('PREV')}
-                className="text-foreground border-border hover:bg-accent/10"
-              >
-                Back
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleNavigate('NEXT')}
-                className="text-foreground border-border hover:bg-accent/10"
-              >
-                Next
-              </Button>
-            </div>
-            
-            <div className="w-[158px]">{/* Empty div to balance the layout */}</div>
-          </div>
-          
-          <div className="flex justify-center z-10 relative">
-            <div className="flex space-x-2">
-              <Button 
-                variant={view === 'month' ? 'default' : 'outline'} 
-                onClick={() => handleViewChange('month')}
-                className={view === 'month' ? 'bg-primary text-primary-foreground' : 'text-foreground border-border hover:bg-accent/10'}
-              >
-                Month
-              </Button>
-              <Button 
-                variant={view === 'week' ? 'default' : 'outline'} 
-                onClick={() => handleViewChange('week')}
-                className={view === 'week' ? 'bg-primary text-primary-foreground' : 'text-foreground border-border hover:bg-accent/10'}
-              >
-                Week
-              </Button>
-              <Button 
-                variant={view === 'day' ? 'default' : 'outline'} 
-                onClick={() => handleViewChange('day')}
-                className={view === 'day' ? 'bg-primary text-primary-foreground' : 'text-foreground border-border hover:bg-accent/10'}
-              >
-                Day
-              </Button>
-            </div>
-          </div>
-        </div>
         <SidebarProvider defaultOpen={true}>
           <SidebarInset className="bg-background border-border">
+            <div className="mb-4 flex flex-col space-y-2">
+              <div className="flex items-center justify-between w-full min-h-[40px]">
+                <div className="flex space-x-2">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => handleNavigate('TODAY')}
+                    className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] border-none"
+                  >
+                    Today
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => handleNavigate('PREV')}
+                    className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] border-none"
+                  >
+                    Back
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => handleNavigate('NEXT')}
+                    className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] border-none"
+                  >
+                    Next
+                  </Button>
+                </div>
+                <div className="flex space-x-2">
+                  <Button 
+                    variant={view === 'month' ? 'default' : 'outline'} 
+                    onClick={() => handleViewChange('month')}
+                    className={view === 'month' ? 'bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] hover:text-white' : 'bg-background text-[var(--accentcolor)] border-[var(--accentcolor)] hover:bg-[var(--accentcolor2)] hover:text-white'}
+                  >
+                    Month
+                  </Button>
+                  <Button 
+                    variant={view === 'week' ? 'default' : 'outline'} 
+                    onClick={() => handleViewChange('week')}
+                    className={view === 'week' ? 'bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] hover:text-white' : 'bg-background text-[var(--accentcolor)] border-[var(--accentcolor)] hover:bg-[var(--accentcolor2)] hover:text-white'}
+                  >
+                    Week
+                  </Button>
+                  <Button 
+                    variant={view === 'day' ? 'default' : 'outline'} 
+                    onClick={() => handleViewChange('day')}
+                    className={view === 'day' ? 'bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] hover:text-white' : 'bg-background text-[var(--accentcolor)] border-[var(--accentcolor)] hover:bg-[var(--accentcolor2)] hover:text-white'}
+                  >
+                    Day
+                  </Button>
+                </div>
+              </div>
+            </div>
             <header className="flex shrink-0 items-center gap-2 bg-background text-foreground">
-
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" className="text-[30px] text-primary">+</Button>
+                  <Button variant="outline" className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] border-none h-8 w-8 flex items-center justify-center text-[20px]">+</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] bg-background text-foreground">
                   <DialogHeader>
-                    <DialogTitle>Add Event</DialogTitle>
+                    <DialogTitle>Add Event/Habit</DialogTitle>
                     <DialogDescription className="text-muted-foreground">
-                      Add a new event to your calendar.
+                      Add a new event or habit to your calendar.
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
@@ -381,7 +375,7 @@ export default function CalendarPage() {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={handleAddEvent}>Add Event</Button>
+                    <Button variant="outline" className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)] border-none" onClick={handleAddEvent}>Add Event</Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

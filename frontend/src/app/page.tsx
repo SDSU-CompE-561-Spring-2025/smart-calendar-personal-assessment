@@ -71,7 +71,7 @@ function EventsList({ events, isLoggedIn, selectedDate }: { events: Event[], isL
       <div className="events-placeholder text-center">
         <p className="text-muted-foreground mb-4">No events for {formattedDate}</p>
         <Link href="/planner">
-          <button className="bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/90 transition-colors">
+          <button className="bg-[var(--accentcolor)] text-white px-4 py-2 rounded hover:bg-[var(--accentcolor2)] transition-colors">
             Add Event
           </button>
         </Link>
@@ -115,7 +115,7 @@ function HabitsList({ habits, isLoggedIn }: { habits: Habit[], isLoggedIn: boole
       <div className="habits-placeholder text-center">
         <p className="text-muted-foreground mb-4">You don't have any habits yet</p>
         <Link href="/planner">
-          <button className="bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/90 transition-colors">
+          <button className="bg-[var(--accentcolor)] text-white px-4 py-2 rounded hover:bg-[var(--accentcolor2)] transition-colors">
             Create Your First Habit
           </button>
         </Link>
@@ -272,19 +272,19 @@ export default function Homepage() {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               <div className="feature p-6 rounded-lg border border-border bg-card flex flex-col items-center text-center">
-                <CalendarIcon className="h-12 w-12 text-primary mb-4" />
+                <CalendarIcon className="h-12 w-12 text-[var(--accentcolor)] mb-4" />
                 <h3 className="text-lg font-medium mb-2">Smart Calendar</h3>
                 <p className="text-muted-foreground">Organize your events with our intuitive calendar interface</p>
               </div>
               
               <div className="feature p-6 rounded-lg border border-border bg-card flex flex-col items-center text-center">
-                <CheckSquare className="h-12 w-12 text-primary mb-4" />
+                <CheckSquare className="h-12 w-12 text-[var(--accentcolor)] mb-4" />
                 <h3 className="text-lg font-medium mb-2">Habit Tracking</h3>
                 <p className="text-muted-foreground">Build consistent habits with customizable trackers</p>
               </div>
               
               <div className="feature p-6 rounded-lg border border-border bg-card flex flex-col items-center text-center">
-                <Target className="h-12 w-12 text-primary mb-4" />
+                <Target className="h-12 w-12 text-[var(--accentcolor)] mb-4" />
                 <h3 className="text-lg font-medium mb-2">Goal Setting</h3>
                 <p className="text-muted-foreground">Set and achieve your goals with progress tracking</p>
               </div>
@@ -292,7 +292,7 @@ export default function Homepage() {
             
             <div className="flex justify-center mt-8">
               <Link href="/signin">
-                <button className="w-full bg-primary text-primary-foreground px-12 py-3 rounded-md text-lg font-medium shadow-md hover:bg-primary/90 transition-all">
+                <button className="w-full bg-[var(--accentcolor)] text-white px-12 py-3 rounded-md text-lg font-medium shadow-md hover:bg-[var(--accentcolor2)] transition-all">
                   Log In
                 </button>
               </Link>
@@ -303,24 +303,24 @@ export default function Homepage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div className="bg-card rounded-lg border border-border p-8 text-center">
                 <div className="flex justify-center mb-4">
-                  <Star className="h-16 w-16 text-primary" />
+                  <Star className="h-16 w-16 text-[var(--accentcolor)]" />
                 </div>
                 <h2 className="text-2xl font-bold mb-6">Why Choose Calendar+?</h2>
                 <ul className="space-y-4 text-left">
                   <li className="flex items-start">
-                    <CheckCircle className="h-5 w-5 text-primary mr-2 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-[var(--accentcolor)] mr-2 flex-shrink-0" />
                     <span>Seamlessly integrate events and habits in one place</span>
                   </li>
                   <li className="flex items-start">
-                    <CheckCircle className="h-5 w-5 text-primary mr-2 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-[var(--accentcolor)] mr-2 flex-shrink-0" />
                     <span>Beautiful, customizable themes to match your style</span>
                   </li>
                   <li className="flex items-start">
-                    <CheckCircle className="h-5 w-5 text-primary mr-2 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-[var(--accentcolor)] mr-2 flex-shrink-0" />
                     <span>Track your progress with visual statistics</span>
                   </li>
                   <li className="flex items-start">
-                    <CheckCircle className="h-5 w-5 text-primary mr-2 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-[var(--accentcolor)] mr-2 flex-shrink-0" />
                     <span>Accessible on any device with a responsive design</span>
                   </li>
                 </ul>
@@ -328,12 +328,12 @@ export default function Homepage() {
               
               <div className="bg-card rounded-lg border border-border p-8 text-center">
                 <div className="flex justify-center mb-4">
-                  <Rocket className="h-16 w-16 text-primary" />
+                  <Rocket className="h-16 w-16 text-[var(--accentcolor)]" />
                 </div>
                 <h3 className="text-xl font-bold mb-4">Get Started Today</h3>
                 <p className="mb-6">Join thousands of users who have improved their productivity with Calendar+</p>
                 <Link href="/signup">
-                  <button className="w-full bg-primary text-primary-foreground py-3 rounded-md font-medium hover:bg-primary/90 transition-all">
+                  <button className="w-full bg-[var(--accentcolor)] text-white py-3 rounded-md font-medium hover:bg-[var(--accentcolor2)] transition-all">
                     Create Your Free Account
                   </button>
                 </Link>
@@ -387,7 +387,7 @@ export default function Homepage() {
         {/* Go to Planner button - full width */}
         <div className="max-w-6xl mx-auto mb-16">
           <Link href="/planner" className="block">
-            <button className="w-full bg-primary text-primary-foreground py-4 rounded-md text-lg font-medium shadow-md hover:bg-primary/90 transition-all">
+            <button className="w-full bg-[var(--accentcolor)] text-white py-4 rounded-md text-lg font-medium shadow-md hover:bg-[var(--accentcolor2)] transition-all">
               Go to Full Planner
             </button>
           </Link>

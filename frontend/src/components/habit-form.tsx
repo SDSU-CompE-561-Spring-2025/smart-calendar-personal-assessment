@@ -452,14 +452,14 @@ export function HabitForm({ onSuccess }: HabitFormProps) {
                   <Button 
                     variant="outline" 
                     onClick={() => setIsCreateCategoryOpen(false)}
-                    className="bg-secondary text-secondary-foreground"
+                    className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)]"
                   >
                     Cancel
                   </Button>
                   <Button 
                     onClick={createCategory} 
                     disabled={creatingCategory || !newCategoryName.trim()}
-                    className={getButtonStyleClass()}
+                    className="bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)]"
                   >
                     {creatingCategory ? 'Creating...' : 'Create Category'}
                   </Button>
@@ -508,7 +508,7 @@ export function HabitForm({ onSuccess }: HabitFormProps) {
 
         <Button 
           type="submit" 
-          className={`w-full ${getButtonStyleClass()}`}
+          className="w-full bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)]"
           disabled={loading || categories.length === 0}
         >
           {loading ? 'Creating...' : 'Create Habit'}

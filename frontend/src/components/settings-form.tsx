@@ -147,7 +147,7 @@ export function SettingsForm({
 
               <Button 
                 type="submit" 
-                className={`w-full ${getButtonStyleClass()}`}
+                className="w-full bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)]"
               >
                 Save Settings
               </Button>

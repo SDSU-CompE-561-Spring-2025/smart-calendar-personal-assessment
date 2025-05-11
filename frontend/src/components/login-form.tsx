@@ -100,15 +100,17 @@ export function LoginForm({
                 onChange = {(event) => setPassword(event.target.value)}
               />
             </div>
-            <Button type="submit" className="w-full bg-(--accentcolor) text-white hover:bg-black"
-                onClick={() => {
-                  if (error) {
-                    toast("Account not found.", {
-                      description: "Please make sure you have an account with us.",
-                    })
-                  } 
-                }
+            <Button 
+              type="submit" 
+              className="w-full bg-[var(--accentcolor)] text-white hover:bg-[var(--accentcolor2)]"
+              onClick={() => {
+                if (error) {
+                  toast("Account not found.", {
+                    description: "Please make sure you have an account with us.",
+                  })
+                } 
               }
+            }
             >
               Sign In
             </Button>
