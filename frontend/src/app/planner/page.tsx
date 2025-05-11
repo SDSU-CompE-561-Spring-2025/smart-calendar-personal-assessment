@@ -310,9 +310,9 @@ export default function CalendarPage() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] bg-background text-foreground">
                   <DialogHeader>
-                    <DialogTitle>Add Event/Habit</DialogTitle>
+                    <DialogTitle>Add Event</DialogTitle>
                     <DialogDescription className="text-muted-foreground">
-                      Add a new event or habit to your calendar.
+                      Add a new event to your calendar.
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
