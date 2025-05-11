@@ -33,7 +33,7 @@ export function Headerinstance() {
             {mounted && isLoggedIn && (
                 <Button 
                     onClick={handleLogout}
-                    className="flex items-center gap-2 px-4 py-2 rounded border border-border bg-secondary text-secondary-foreground hover:bg-black transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 rounded border border-border bg-secondary text-secondary-foreground hover:bg-black transition-colors rounded-lg"
                     aria-label="Logout"
                 >
                     <LogOut className="h-4 w-4" />
